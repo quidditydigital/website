@@ -36,8 +36,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=Sora:wght@600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
-  <link rel="stylesheet" href="hero-redesign.css"/>
-  <link rel="stylesheet" href="hidden-current.css"/>
+  <link rel="stylesheet" href="ocean-current.css"/>
+  <link rel="stylesheet" href="ocean-current-blog.css"/>
 
   <style>
     /* ═══════════════════════════════════════════════
@@ -51,13 +51,13 @@
     /* quiddity_digital = your Instagram handle                          */
     /* These are also in the JS constants below — update both together     */
 
-    /* ── Progress bar — current flow indicator ─── */
-    #bp-progress{position:fixed;top:0;left:0;width:0%;height:2px;background:linear-gradient(90deg,#0BC4DC,#7CE8F4,#E8A81B);z-index:9999;transition:width .1s linear;pointer-events:none;box-shadow:0 0 8px rgba(11,196,220,.45)}
+    /* ── Progress bar ──────────────────────────── */
+    #bp-progress{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,#0BC4DC,#FFC01E);z-index:9999;transition:width .1s linear;pointer-events:none}
     .bp-nav-spacer{height:68px}
 
     /* ── Hero ──────────────────────────────────── */
-    .bp-hero{background:linear-gradient(170deg,#050A0F 0%,#0B1520 100%);padding:56px 0 0;border-bottom:1px solid rgba(11,196,220,.07);position:relative;overflow:hidden}
-    .bp-hero-grid{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(11,196,220,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(11,196,220,.025) 1px,transparent 1px);background-size:64px 64px;pointer-events:none}
+    .bp-hero{background:#fff;padding:56px 0 0;border-bottom:1px solid #e8ecf0;position:relative;overflow:hidden}
+    .bp-hero-grid{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(11,196,220,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(11,196,220,.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
     .bp-hero-glow{position:absolute;top:-160px;right:-120px;width:560px;height:560px;background:radial-gradient(circle,rgba(11,196,220,.09) 0%,transparent 65%);border-radius:50%;pointer-events:none}
     .bp-hero .container{position:relative;z-index:1}
 
@@ -90,7 +90,7 @@
     .bp-cover{width:100%;max-height:540px;object-fit:cover;display:block}
 
     /* ── Body layout ─────────────────────────── */
-    .bp-body{background:linear-gradient(180deg,#0B1520 0%,#070D14 100%);padding:72px 0 140px}
+    .bp-body{background:#fff;padding:72px 0 140px}
     .bp-layout{display:grid;grid-template-columns:1fr 256px;gap:64px;align-items:start;max-width:1060px;margin:0 auto}
 
     /* ── Article typography ──────────────────── */
@@ -201,57 +201,57 @@
 
     /* ── Desktop TOC sidebar ─────────────────── */
     .bp-toc-wrap{position:sticky;top:96px;max-height:calc(100vh - 120px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#0BC4DC transparent}
-    .bp-toc{padding:24px;background:rgba(11,20,32,.7);border:1px solid rgba(11,196,220,.1);border-radius:3px;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s;backdrop-filter:blur(4px)}
+    .bp-toc{padding:24px;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:16px;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
     .bp-toc.visible{opacity:1;transform:translateY(0)}
-    .bp-toc-label{font-family:'Archive',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#0BC4DC;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-    .bp-toc-label::after{content:'';flex:1;height:1px;background:rgba(11,196,220,.12)}
+    .bp-toc-label{font-family:'Sora',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0BC4DC;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .bp-toc-label::after{content:'';flex:1;height:1px;background:#e2e8f0}
     .bp-toc-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:1px}
-    .bp-toc-list li a{display:block;font-family:'Archive',sans-serif;font-size:.74rem;line-height:1.44;color:#3D5A6A;padding:5px 8px 5px 12px;border-left:2px solid transparent;border-radius:0 2px 2px 0;transition:color .2s,border-color .2s,background .2s,padding-left .2s;text-decoration:none}
-    .bp-toc-list li a:hover{color:#0BC4DC;background:rgba(11,196,220,.06);padding-left:16px}
-    .bp-toc-list li.toc-active a{color:#0BC4DC;border-left-color:#0BC4DC;background:rgba(11,196,220,.07);font-weight:700;padding-left:16px}
+    .bp-toc-list li a{display:block;font-family:'Inter',sans-serif;font-size:.76rem;line-height:1.44;color:#7a8a9a;padding:5px 8px 5px 12px;border-left:2px solid transparent;border-radius:0 7px 7px 0;transition:color .15s,border-color .15s,background .15s,padding-left .15s;text-decoration:none}
+    .bp-toc-list li a:hover{color:#0891a8;background:rgba(11,196,220,.06);padding-left:16px}
+    .bp-toc-list li.toc-active a{color:#0BC4DC;border-left-color:#0BC4DC;background:rgba(11,196,220,.08);font-weight:600;padding-left:16px}
     .bp-toc-list li.toc-h3 a{padding-left:24px;font-size:.72rem}
     .bp-toc-list li.toc-h3.toc-active a{padding-left:28px}
 
     /* ── Mobile TOC drawer ───────────────────── */
-    .bp-toc-mobile{display:none;margin:0 0 40px;border:1px solid rgba(11,196,220,.1);border-radius:3px;overflow:hidden;background:rgba(11,20,32,.7)}
-    .bp-toc-mobile-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:15px 20px;background:none;border:none;cursor:pointer;font-family:'Archive',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0BC4DC}
+    .bp-toc-mobile{display:none;margin:0 0 40px;border:1.5px solid #e2e8f0;border-radius:14px;overflow:hidden;background:#f8fafc}
+    .bp-toc-mobile-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:15px 20px;background:none;border:none;cursor:pointer;font-family:'Sora',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#0891a8}
     .bp-toc-mobile-toggle svg{transition:transform .25s;flex-shrink:0}
     .bp-toc-mobile.open .bp-toc-mobile-toggle svg{transform:rotate(180deg)}
-    .bp-toc-mobile-body{display:none;padding:0 20px 18px;border-top:1px solid rgba(11,196,220,.08)}
+    .bp-toc-mobile-body{display:none;padding:0 20px 18px;border-top:1px solid #e2e8f0}
     .bp-toc-mobile.open .bp-toc-mobile-body{display:block}
     .bp-toc-mobile-body ul{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:1px}
-    .bp-toc-mobile-body ul li a{display:block;font-family:'Archive',sans-serif;font-size:.8rem;color:#7A9BAD;padding:8px 0;text-decoration:none;border-bottom:1px solid rgba(11,196,220,.06);transition:color .2s}
+    .bp-toc-mobile-body ul li a{display:block;font-family:'Inter',sans-serif;font-size:.8rem;color:#4a5a6a;padding:8px 0;text-decoration:none;border-bottom:1px solid #f0f4f8;transition:color .15s}
     .bp-toc-mobile-body ul li a:hover{color:#0BC4DC}
-    .bp-toc-mobile-body ul li.toc-h3 a{padding-left:16px;font-size:.75rem;color:#3D5A6A}
-    .bp-toc-mobile-body ul li.toc-active a{color:#0BC4DC;font-weight:700}
+    .bp-toc-mobile-body ul li.toc-h3 a{padding-left:16px;font-size:.75rem;color:#7a8a9a}
+    .bp-toc-mobile-body ul li.toc-active a{color:#0BC4DC;font-weight:600}
     .bp-toc-mobile-body ul li:last-child a{border-bottom:none}
 
     /* ── Related posts ───────────────────────── */
     .bp-related{margin-top:72px;padding-top:56px;border-top:2px solid #f0f9fb}
     .bp-related-label{font-family:'Sora',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#0BC4DC;margin-bottom:6px}
-    .bp-related-heading{font-family:'Archive',sans-serif;font-size:1.3rem;font-weight:700;color:#E8EDF2;margin-bottom:24px;letter-spacing:-.015em}
+    .bp-related-heading{font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;color:#0f1924;margin-bottom:24px;letter-spacing:-.022em}
     .bp-related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    .bp-related-card{display:block;background:rgba(11,20,32,.7);border:1px solid rgba(11,196,220,.08);border-radius:3px;overflow:hidden;text-decoration:none;transition:transform .3s,box-shadow .3s,border-color .3s}
-    .bp-related-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4);border-color:rgba(11,196,220,.2)}
-    .bp-related-thumb{height:115px;overflow:hidden;background:rgba(11,196,220,.04);position:relative}
+    .bp-related-card{display:block;background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;overflow:hidden;text-decoration:none;transition:transform .22s,box-shadow .22s,border-color .22s}
+    .bp-related-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(11,196,220,.13);border-color:#b2e8f0}
+    .bp-related-thumb{height:115px;overflow:hidden;background:linear-gradient(135deg,#e8f8fb,#f0fbfd);position:relative}
     .bp-related-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
     .bp-related-card:hover .bp-related-thumb img{transform:scale(1.06)}
-    .bp-related-thumb-ph{display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;color:rgba(11,196,220,.2)}
+    .bp-related-thumb-ph{display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;color:rgba(11,196,220,.3)}
     .bp-related-body{padding:16px 18px 20px}
-    .bp-related-cat{font-family:'Archive',sans-serif;font-size:.56rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:#0BC4DC;margin-bottom:6px}
-    .bp-related-title{font-family:'Archive',sans-serif;font-size:.86rem;font-weight:700;color:#E8EDF2;line-height:1.42;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .bp-related-cta{font-family:'Archive',sans-serif;font-size:.66rem;font-weight:400;color:#0BC4DC;display:flex;align-items:center;gap:4px;transition:gap .2s;letter-spacing:.1em;text-transform:uppercase}
+    .bp-related-cat{font-family:'Sora',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#0891a8;margin-bottom:6px}
+    .bp-related-title{font-family:'Sora',sans-serif;font-size:.86rem;font-weight:700;color:#0f1924;line-height:1.42;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .bp-related-cta{font-family:'Sora',sans-serif;font-size:.66rem;font-weight:700;color:#0BC4DC;display:flex;align-items:center;gap:4px;transition:gap .16s}
     .bp-related-card:hover .bp-related-cta{gap:8px}
 
     /* ── Loading / Error ─────────────────────── */
     .bp-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:20px}
-    .bp-spinner{width:36px;height:36px;border:1.5px solid rgba(11,196,220,.15);border-top-color:#0BC4DC;border-radius:50%;animation:bp-spin .9s linear infinite}
+    .bp-spinner{width:40px;height:40px;border:3px solid #e2e8f0;border-top-color:#0BC4DC;border-radius:50%;animation:bp-spin .7s linear infinite}
     @keyframes bp-spin{to{transform:rotate(360deg)}}
-    .bp-loading p{color:#3D5A6A;font-size:.86rem;font-family:'Archive',sans-serif;letter-spacing:.1em;text-transform:uppercase}
+    .bp-loading p{color:#9aabb8;font-size:.9rem;font-family:'Inter',sans-serif}
     .bp-error{text-align:center;padding:100px 24px}
     .bp-error .bp-err-icon{font-size:3rem;margin-bottom:16px}
-    .bp-error h2{font-family:'Archive',sans-serif;font-size:1.4rem;font-weight:700;color:#E8EDF2;margin-bottom:10px}
-    .bp-error p{color:#3D5A6A;margin-bottom:28px;font-size:.95rem}
+    .bp-error h2{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:700;color:#0f1924;margin-bottom:10px}
+    .bp-error p{color:#7a8a9a;margin-bottom:28px;font-size:.97rem}
 
     /* ── Responsive ──────────────────────────── */
     @media(max-width:960px){
@@ -302,47 +302,19 @@
 </head>
 <body>
 
-<!-- ══ GLOBAL CURRENT CANVAS ══════════════════════════════════ -->
-<div id="current-canvas" aria-hidden="true">
-  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <path class="current-path current-path--a"
-      d="M-100 220 C 200 195, 500 255, 800 215 S 1200 170, 1600 220"
-      stroke="rgba(11,196,220,0.065)" stroke-width="1.2"/>
-    <path class="current-path current-path--b"
-      d="M-100 410 C 300 385, 600 445, 900 405 S 1300 365, 1700 410"
-      stroke="rgba(11,196,220,0.05)"/>
-    <path class="current-path current-path--c"
-      d="M-100 620 C 250 595, 550 648, 850 612 S 1250 565, 1650 618"
-      stroke="rgba(11,196,220,0.038)"/>
-    <path class="current-path current-path--e"
-      d="M-100 100 C 350 78, 650 118, 950 94 S 1350 68, 1700 102"
-      stroke="rgba(11,196,220,0.03)"/>
-    <circle cx="320"  cy="250" r="1.1" fill="rgba(11,196,220,0.16)">
-      <animate attributeName="opacity" values=".08;.42;.08" dur="8s"  repeatCount="indefinite"/>
-    </circle>
-    <circle cx="1050" cy="420" r="1.3" fill="rgba(11,196,220,0.14)">
-      <animate attributeName="opacity" values=".06;.35;.06" dur="11s" repeatCount="indefinite" begin="4s"/>
-    </circle>
-    <circle cx="680"  cy="640" r="0.9" fill="rgba(11,196,220,0.12)">
-      <animate attributeName="opacity" values=".05;.3;.05"  dur="9s"  repeatCount="indefinite" begin="2s"/>
-    </circle>
-  </svg>
-</div>
-
 <div id="bp-progress"></div>
+
+<!-- Current Channel — depth-gauge reading progress (desktop only, >1300px) -->
+<div class="current-channel" id="currentChannel" aria-hidden="true">
+  <div class="cc-track"></div>
+  <div class="cc-fill"  id="ccFill"></div>
+  <div class="cc-node"  id="ccNode"></div>
+</div>
 
 <!-- ══ NAVBAR ════════════════════════════════════════════════════ -->
 <nav id="navbar" class="solid">
   <div class="container nav-wrap">
-    <a href="/" class="nav-logo navbar-logo">
-      <img
-        src="/assets/Header.svg"
-        alt="Quiddity Digital"
-        class="navbar-logo-image"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
+    <a href="/" class="nav-logo">Quiddity<em>Digital</em></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="/">Home</a></li>
       <li><a href="/#services">Services</a></li>
@@ -467,15 +439,10 @@ function estimateWordCount(blocks=[]){
   document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 })();
 
-/* ── Reading progress bar + navbar depth ─────────────────────── */
+/* ── Reading progress bar ──────────────────────────────────── */
 (function(){
-  const bar = document.getElementById('bp-progress');
-  const nav = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    const d = document.documentElement;
-    if(bar) bar.style.width = Math.min((d.scrollTop / (d.scrollHeight - d.clientHeight)) * 100, 100) + '%';
-    if(nav) nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, {passive: true});
+  const bar=document.getElementById('bp-progress');
+  window.addEventListener('scroll',()=>{const d=document.documentElement;bar.style.width=Math.min((d.scrollTop/(d.scrollHeight-d.clientHeight))*100,100)+'%'},{passive:true});
 })();
 
 /* ══════════════════════════════════════════════════════════════
@@ -897,6 +864,33 @@ function renderError(root,title,msg){
 }
 
 document.addEventListener('DOMContentLoaded',loadBlogPage);
+
+/* ── Hidden Current: navbar glass + current-channel reading depth ── */
+(function(){
+  'use strict';
+  // Navbar
+  var nav = document.getElementById('navbar');
+  if (nav) {
+    function updateNav(){ nav.classList.toggle('navbar-scrolled', window.scrollY > 32) }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+  }
+  // Current-channel — depth gauge tracks reading progress
+  var fill = document.getElementById('ccFill');
+  var node = document.getElementById('ccNode');
+  if (fill && node) {
+    function updateProgress(){
+      var doc   = document.documentElement;
+      var total = doc.scrollHeight - doc.clientHeight;
+      var pct   = total > 0 ? Math.min(100, (window.scrollY / total) * 100) : 0;
+      var pStr  = pct.toFixed(1) + '%';
+      fill.style.height = pStr;
+      node.style.top    = pStr;
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+})();
 </script>
 </body>
 </html>

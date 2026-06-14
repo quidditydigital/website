@@ -28,8 +28,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="styles.css"/>
-  <link rel="stylesheet" href="hero-redesign.css"/>
-  <link rel="stylesheet" href="hidden-current.css"/>
+  <link rel="stylesheet" href="ocean-current.css"/>
   <!-- Breadcrumb JSON-LD -->
   <script type="application/ld+json">
   {
@@ -43,14 +42,16 @@
   </script>
   <style>
     /* ══════════════════════════════════════════
-       ALL POSTS PAGE — additional styles
+       ALL POSTS — layout + Hidden Current theme
        ══════════════════════════════════════════ */
 
     /* Hero */
     .ap-hero {
-      background: var(--white);
+      background-image:
+        radial-gradient(ellipse 55% 70% at 90% 0%, rgba(110,120,255,.05) 0%, transparent 55%),
+        linear-gradient(180deg, var(--abyss) 0%, var(--depth-1) 100%);
       padding: 120px 0 56px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--edge);
       position: relative;
       overflow: hidden;
     }
@@ -59,146 +60,77 @@
       position: absolute;
       top: -80px; right: -100px;
       width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(11,196,220,.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(34,217,232,.08) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
     }
     .ap-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--ff-h);
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--tx-lt);
-      margin-bottom: 20px;
-      transition: color var(--t);
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--ff-mono); font-size: .72rem; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 20px;
+      transition: color .3s; text-decoration: none;
     }
-    .ap-back:hover { color: var(--blue-d) }
-
+    .ap-back:hover { color: var(--current-soft) }
     .ap-hero h1 {
-      font-family: var(--ff-h);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      color: var(--tx);
-      line-height: 1.15;
-      margin-bottom: 12px;
+      font-family: var(--ff-h); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; color: var(--text-bright); line-height: 1.15; margin-bottom: 12px;
     }
-    .ap-hero p {
-      font-size: 1rem;
-      color: var(--tx-sub);
-      max-width: 480px;
-    }
+    .ap-hero p { font-size: 1rem; color: var(--text-soft); max-width: 480px }
 
     /* Controls bar */
     .ap-controls {
-      padding: 32px 0 36px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 40px;
+      padding: 32px 0 36px; display: flex; flex-wrap: wrap;
+      gap: 16px; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--edge); margin-bottom: 40px;
     }
 
     /* Search */
-    .ap-search-wrap {
-      position: relative;
-      flex: 1;
-      min-width: 200px;
-      max-width: 320px;
-    }
-    .ap-search-wrap svg {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--tx-lt);
-      pointer-events: none;
-    }
+    .ap-search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 320px }
+    .ap-search-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none }
     #apSearch {
-      width: 100%;
-      padding: 11px 16px 11px 40px;
-      border: 1.5px solid var(--border);
-      border-radius: 50px;
-      font-family: var(--ff-b);
-      font-size: .88rem;
-      color: var(--tx);
-      background: var(--white);
-      transition: border-color var(--t), box-shadow var(--t);
-      outline: none;
+      width: 100%; padding: 11px 16px 11px 40px;
+      border: 1px solid var(--edge); border-radius: 4px;
+      font-family: var(--ff-b); font-size: .88rem; color: var(--text-bright);
+      background: var(--depth-2); transition: border-color .3s, box-shadow .3s; outline: none;
     }
-    #apSearch:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(11,196,220,.12);
-    }
-    #apSearch::placeholder { color: var(--tx-lt) }
+    #apSearch:focus { border-color: var(--current); box-shadow: 0 0 0 3px rgba(34,217,232,.10) }
+    #apSearch::placeholder { color: var(--text-muted) }
 
     /* Category filters */
-    .ap-cats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
+    .ap-cats { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
     .cat-btn {
-      font-family: var(--ff-h);
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 7px 16px;
-      border-radius: 50px;
-      border: 1.5px solid var(--border);
-      color: var(--tx-sub);
-      background: var(--white);
-      cursor: pointer;
-      transition: border-color var(--t), color var(--t), background var(--t);
+      font-family: var(--ff-mono); font-size: .68rem; font-weight: 400;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 7px 18px; border-radius: 3px;
+      border: 1px solid var(--edge); color: var(--text-muted);
+      background: transparent; cursor: pointer;
+      transition: border-color .3s, color .3s, background .3s;
     }
-    .cat-btn:hover  { border-color: var(--blue); color: var(--blue-d) }
-    .cat-btn.active {
-      background: var(--blue);
-      border-color: var(--blue);
-      color: var(--white);
-    }
+    .cat-btn:hover  { border-color: var(--edge-strong); color: var(--current-soft) }
+    .cat-btn.active { background: rgba(34,217,232,.08); border-color: var(--edge-strong); color: var(--current) }
 
     /* Count */
     .ap-count {
-      font-family: var(--ff-h);
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--tx-lt);
-      margin-bottom: 24px;
+      font-family: var(--ff-mono); font-size: .68rem; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 24px;
     }
 
     /* Grid */
-    #apGrid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-bottom: 80px;
-    }
+    #apGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 80px }
 
     /* Empty / error states */
-    .ap-empty {
-      text-align: center;
-      padding: 80px 20px;
-      color: var(--tx-sub);
-      font-size: .95rem;
-      grid-column: 1 / -1;
-    }
+    .ap-empty { text-align: center; padding: 80px 20px; color: var(--text-soft); font-size: .95rem; grid-column: 1 / -1 }
     .ap-empty span { font-size: 2.4rem; display: block; margin-bottom: 12px }
 
     /* Skeleton loading */
     .blog-skeleton {
-      min-height: 340px;
-      background: linear-gradient(90deg, var(--bg) 25%, var(--border) 50%, var(--bg) 75%);
+      min-height: 340px; border-radius: 4px;
+      background: linear-gradient(90deg, var(--depth-1) 25%, var(--depth-2) 50%, var(--depth-1) 75%);
       background-size: 200% 100%;
+      animation: ap-shimmer 1.8s ease-in-out infinite;
+      border: 1px solid var(--edge);
+    }
       animation: shimmer 1.4s infinite;
       border-radius: var(--r-xl);
       border: 1.5px solid var(--border);
@@ -243,41 +175,12 @@
 </head>
 <body>
 
-<!-- ══ GLOBAL CURRENT CANVAS ══════════════════════════════════ -->
-<div id="current-canvas" aria-hidden="true">
-  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <path class="current-path current-path--a"
-      d="M-100 220 C 200 195, 500 255, 800 215 S 1200 170, 1600 220"
-      stroke="rgba(11,196,220,0.065)" stroke-width="1.2"/>
-    <path class="current-path current-path--b"
-      d="M-100 410 C 300 385, 600 445, 900 405 S 1300 365, 1700 410"
-      stroke="rgba(11,196,220,0.05)"/>
-    <path class="current-path current-path--c"
-      d="M-100 620 C 250 595, 550 648, 850 612 S 1250 565, 1650 618"
-      stroke="rgba(11,196,220,0.038)"/>
-    <circle cx="380" cy="190" r="1.0" fill="rgba(11,196,220,0.15)">
-      <animate attributeName="opacity" values=".07;.40;.07" dur="9s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="1100" cy="480" r="1.2" fill="rgba(11,196,220,0.12)">
-      <animate attributeName="opacity" values=".06;.32;.06" dur="12s" repeatCount="indefinite" begin="5s"/>
-    </circle>
-  </svg>
-</div>
-
 <!-- ══════════════════════════════════════════
      NAVBAR
      ══════════════════════════════════════════ -->
 <nav id="navbar">
   <div class="container nav-wrap">
-    <a href="/" class="nav-logo navbar-logo">
-      <img
-        src="/assets/Header.svg"
-        alt="Quiddity Digital"
-        class="navbar-logo-image"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
+    <a href="/" class="nav-logo">Quiddity<em>Digital</em></a>
 
     <ul class="nav-links" id="navLinks">
       <li><a href="/">Home</a></li>
@@ -327,7 +230,7 @@
 <!-- ══════════════════════════════════════════
      MAIN CONTENT
      ══════════════════════════════════════════ -->
-<main style="background:var(--bg); padding-top:0; min-height:60vh">
+<main style="background:var(--abyss); padding-top:0; min-height:60vh">
   <div class="container">
 
     <!-- Controls: search + category filters -->
@@ -570,6 +473,15 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 
 document.addEventListener('DOMContentLoaded', initAllPosts);
+
+/* Hidden Current — navbar glass */
+(function(){
+  var nav = document.getElementById('navbar');
+  if (!nav) return;
+  function updateNav(){ nav.classList.toggle('navbar-scrolled', window.scrollY > 32) }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+})();
 </script>
 </body>
 </html>

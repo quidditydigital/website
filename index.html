@@ -26,71 +26,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="styles.css"/>
-  <link rel="stylesheet" href="hero-redesign.css"/>
-  <link rel="stylesheet" href="hidden-current.css"/>
+  <link rel="stylesheet" href="ocean-current.css"/>
   <style>
-    /* ── Fix hero eyebrow: remove pill background, plain label style ── */
-    .hero-eyebrow {
-      background: none !important;
-      border: none !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--tx-lt, #6b7280);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    /* ── New about section: full-width copy layout ── */
-    .about-copy-full {
-      max-width: 780px;
-      margin: 0 auto;
-    }
-    .about-copy-full .section-h2 {
-      margin-bottom: 24px;
-    }
-    .about-copy-full .about-quiddity-badge {
-      margin-bottom: 24px;
-    }
-    .about-copy-full .body-p {
-      margin-bottom: 16px;
-    }
+    /* Layout-only rules not covered by ocean-current.css */
+    .about-copy-full { max-width: 780px; margin: 0 auto }
+    .about-copy-full .section-h2 { margin-bottom: 24px }
+    .about-copy-full .about-quiddity-badge { margin-bottom: 24px }
+    .about-copy-full .body-p { margin-bottom: 16px }
     .about-stats-row {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-      margin: 36px 0 32px;
-      padding: 28px 32px;
-      background: var(--surface, #f8fafc);
-      border-radius: 16px;
+      display: flex; gap: 40px; flex-wrap: wrap;
+      margin: 36px 0 32px; padding: 28px 32px;
+      background: rgba(22,49,62,.55); border: 1px solid var(--edge);
+      border-radius: 8px; backdrop-filter: blur(6px);
     }
-    .about-stat {
-      flex: 1;
-      min-width: 100px;
-    }
-    .as-n {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--blue, #0BC4DC);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .as-l {
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      color: var(--tx-lt, #6b7280);
-      font-weight: 600;
-    }
-    @media (max-width: 600px) {
-      .about-stats-row { gap: 24px; padding: 20px; }
-      .as-n { font-size: 1.6rem; }
-    }
+    .about-stat { flex: 1; min-width: 100px }
+    .as-n { font-family: var(--ff-h); font-size: 2rem; font-weight: 700; color: var(--current); line-height: 1; margin-bottom: 5px }
+    .as-l { font-family: var(--ff-mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .12em; color: var(--text-muted) }
+    @media (max-width: 600px) { .about-stats-row { gap: 24px; padding: 20px } .as-n { font-size: 1.65rem } }
   </style>
   <!-- LocalBusiness JSON-LD structured data -->
   <script type="application/ld+json">
@@ -158,84 +110,11 @@
 <body>
 
 <!-- ══════════════════════════════════════════
-     GLOBAL CURRENT CANVAS — fixed background layer
-     Slow-drifting SVG paths suggesting hidden underwater currents.
-     Entirely visual, aria-hidden, pointer-events none.
-     ══════════════════════════════════════════ -->
-<div id="current-canvas" aria-hidden="true">
-  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <!-- Primary current — mid depth -->
-    <path class="current-path current-path--a"
-      d="M-100 220 C 200 195, 500 255, 800 215 S 1200 170, 1600 220"
-      stroke="rgba(11,196,220,0.07)" stroke-width="1.2"/>
-
-    <!-- Secondary current — deeper -->
-    <path class="current-path current-path--b"
-      d="M-100 410 C 300 385, 600 445, 900 405 S 1300 365, 1700 410"
-      stroke="rgba(11,196,220,0.055)"/>
-
-    <!-- Tertiary — faintest, deepest layer -->
-    <path class="current-path current-path--c"
-      d="M-100 610 C 250 585, 550 640, 850 605 S 1250 560, 1650 610"
-      stroke="rgba(11,196,220,0.04)"/>
-
-    <!-- Upper thermal drift — warmer toned -->
-    <path class="current-path current-path--d"
-      d="M-100 95 C 350 75, 650 115, 950 90 S 1350 65, 1700 98"
-      stroke="rgba(11,196,220,0.035)"/>
-
-    <!-- Lower cross-current — diagonal tendency -->
-    <path class="current-path current-path--e"
-      d="M-100 760 C 280 740, 580 790, 880 760 S 1280 720, 1680 760"
-      stroke="rgba(11,196,220,0.03)"/>
-
-    <!-- Micro-currents: short filaments that shimmer -->
-    <line x1="160"  y1="320" x2="340"  y2="315" stroke="rgba(11,196,220,0.045)" stroke-width=".7" opacity=".6">
-      <animate attributeName="opacity" values=".3;.7;.3" dur="8s" repeatCount="indefinite"/>
-    </line>
-    <line x1="720"  y1="510" x2="900"  y2="505" stroke="rgba(11,196,220,0.045)" stroke-width=".7" opacity=".5">
-      <animate attributeName="opacity" values=".2;.6;.2" dur="11s" repeatCount="indefinite" begin="3s"/>
-    </line>
-    <line x1="1100" y1="280" x2="1280" y2="274" stroke="rgba(11,196,220,0.04)" stroke-width=".7" opacity=".5">
-      <animate attributeName="opacity" values=".2;.5;.2" dur="9s"  repeatCount="indefinite" begin="6s"/>
-    </line>
-    <line x1="440"  y1="690" x2="620"  y2="685" stroke="rgba(11,196,220,0.035)" stroke-width=".6" opacity=".4">
-      <animate attributeName="opacity" values=".15;.45;.15" dur="13s" repeatCount="indefinite" begin="1s"/>
-    </line>
-
-    <!-- Bioluminescent scatter — fixed faint dots -->
-    <circle cx="248"  cy="187" r="1.2" fill="rgba(11,196,220,0.18)">
-      <animate attributeName="opacity" values=".1;.45;.1" dur="7s"  repeatCount="indefinite"/>
-    </circle>
-    <circle cx="912"  cy="342" r="1.0" fill="rgba(11,196,220,0.15)">
-      <animate attributeName="opacity" values=".08;.38;.08" dur="9s"  repeatCount="indefinite" begin="2s"/>
-    </circle>
-    <circle cx="1320" cy="558" r="1.4" fill="rgba(11,196,220,0.14)">
-      <animate attributeName="opacity" values=".1;.35;.1"  dur="11s" repeatCount="indefinite" begin="5s"/>
-    </circle>
-    <circle cx="580"  cy="720" r="0.9" fill="rgba(11,196,220,0.16)">
-      <animate attributeName="opacity" values=".08;.4;.08" dur="8s"  repeatCount="indefinite" begin="4s"/>
-    </circle>
-    <circle cx="76"   cy="490" r="1.1" fill="rgba(11,196,220,0.12)">
-      <animate attributeName="opacity" values=".06;.3;.06" dur="14s" repeatCount="indefinite" begin="7s"/>
-    </circle>
-  </svg>
-</div>
-
-<!-- ══════════════════════════════════════════
      NAVBAR
      ══════════════════════════════════════════ -->
 <nav id="navbar">
   <div class="container nav-wrap">
-    <a href="#home" class="nav-logo navbar-logo">
-      <img
-        src="/assets/Header.svg"
-        alt="Quiddity Digital"
-        class="navbar-logo-image"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
+    <a href="#home" class="nav-logo">Quiddity<em>Digital</em></a>
 
     <ul class="nav-links" id="navLinks">
       <li><a href="#home">Home</a></li>
@@ -268,57 +147,33 @@
      ══════════════════════════════════════════ -->
 <section id="home">
 
+  <!-- ── Current Field — abstract flowing channel lines ─────────── -->
+  <svg class="current-field" aria-hidden="true" preserveAspectRatio="xMidYMid slice"
+       viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="curBlur" x="-20%" y="-200%" width="140%" height="500%">
+        <feGaussianBlur stdDeviation="3"/>
+      </filter>
+    </defs>
+    <!-- Base threads — static, very faint -->
+    <path class="cl cl--a" d="M-150,105 C220,82 490,138 750,108 S1150,65  1590,98"/>
+    <path class="cl cl--b" d="M-150,255 C240,230 510,280 770,252 S1160,215 1590,245"/>
+    <path class="cl cl--a" d="M-150,415 C250,390 520,445 780,416 S1165,375 1590,405"/>
+    <path class="cl cl--b" d="M-150,565 C225,542 495,590 755,563 S1150,525 1590,556"/>
+    <path class="cl cl--c" d="M-150,715 C215,693 485,738 745,712 S1145,677 1590,706"/>
+    <path class="cl cl--a" d="M-150,848 C230,828 500,868 760,844 S1155,814 1590,838"/>
+    <!-- Traveling pulse segments — glow rendered by filter -->
+    <path class="cl cl--a cl--pulse" d="M-150,105 C220,82 490,138 750,108 S1150,65  1590,98"/>
+    <path class="cl cl--b cl--pulse" d="M-150,415 C250,390 520,445 780,416 S1165,375 1590,405"/>
+    <path class="cl cl--c cl--pulse" d="M-150,715 C215,693 485,738 745,712 S1145,677 1590,706"/>
+  </svg>
+
   <!-- Atmospheric layers (visual only, aria-hidden) -->
   <div class="hero-ocean-canvas" aria-hidden="true">
     <div class="bio-orb bio-orb--a"></div>
     <div class="bio-orb bio-orb--b"></div>
     <div class="bio-orb bio-orb--c"></div>
   </div>
-
-  <!-- Hero current lines — closer, more visible than global canvas -->
-  <div class="hero-current-lines" aria-hidden="true">
-    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"
-         width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-      <path d="M-80 380 C 280 340, 620 420, 960 375 S 1380 330, 1680 385"
-        fill="none" stroke="rgba(11,196,220,0.09)" stroke-width="1">
-        <animate attributeName="d"
-          values="M-80 380 C 280 340, 620 420, 960 375 S 1380 330, 1680 385;
-                  M-80 395 C 280 325, 620 440, 960 360 S 1380 345, 1680 400;
-                  M-80 370 C 280 355, 620 405, 960 390 S 1380 315, 1680 375;
-                  M-80 380 C 280 340, 620 420, 960 375 S 1380 330, 1680 385"
-          dur="24s" repeatCount="indefinite" calcMode="spline"
-          keySplines=".45 0 .55 1; .45 0 .55 1; .45 0 .55 1"/>
-      </path>
-      <path d="M-80 520 C 320 490, 660 545, 1000 510 S 1400 470, 1720 525"
-        fill="none" stroke="rgba(11,196,220,0.065)" stroke-width=".8">
-        <animate attributeName="d"
-          values="M-80 520 C 320 490, 660 545, 1000 510 S 1400 470, 1720 525;
-                  M-80 535 C 320 475, 660 560, 1000 495 S 1400 485, 1720 540;
-                  M-80 510 C 320 505, 660 530, 1000 520 S 1400 455, 1720 515;
-                  M-80 520 C 320 490, 660 545, 1000 510 S 1400 470, 1720 525"
-          dur="31s" repeatCount="indefinite" calcMode="spline"
-          keySplines=".45 0 .55 1; .45 0 .55 1; .45 0 .55 1" begin="-10s"/>
-      </path>
-      <!-- Faint glow duplicate — filter trick for soft luminescence -->
-      <path d="M-80 380 C 280 340, 620 420, 960 375 S 1380 330, 1680 385"
-        fill="none" stroke="rgba(11,196,220,0.04)" stroke-width="4" filter="url(#glow)">
-        <animate attributeName="d"
-          values="M-80 380 C 280 340, 620 420, 960 375 S 1380 330, 1680 385;
-                  M-80 395 C 280 325, 620 440, 960 360 S 1380 345, 1680 400;
-                  M-80 370 C 280 355, 620 405, 960 390 S 1380 315, 1680 375;
-                  M-80 380 C 280 340, 620 420, 960 375 S 1380 330, 1680 385"
-          dur="24s" repeatCount="indefinite" calcMode="spline"
-          keySplines=".45 0 .55 1; .45 0 .55 1; .45 0 .55 1"/>
-      </path>
-      <defs>
-        <filter id="glow" x="-20%" y="-100%" width="140%" height="300%">
-          <feGaussianBlur stdDeviation="6" result="blur"/>
-          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-        </filter>
-      </defs>
-    </svg>
-  </div>
-
   <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
 
   <div class="container">
@@ -344,7 +199,7 @@
         <h1 class="hero-h1">
           <span class="h1-line">The <em>Hidden</em> Element</span>
           <span class="h1-line">Behind Your</span>
-          <span class="h1-line h1-gold">Growth.</span>
+          <span class="h1-line h1-accent">Growth.</span>
         </h1>
 
         <span class="hero-rule"></span>
@@ -397,20 +252,33 @@
 
 
 <!-- ══════════════════════════════════════════
-     PHILOSOPHY BAND (new — between hero & about)
+     SIGNAL BAND — Our manifesto as a current readout
      ══════════════════════════════════════════ -->
-<div class="philosophy-band reveal">
-  <div class="philosophy-inner">
-    <div>
-      <p class="philosophy-label">Our Manifesto</p>
-      <div class="philosophy-marker"></div>
+<div class="philosophy-band signal-band reveal">
+  <div class="philosophy-inner signal-inner">
+
+    <!-- Glyph: three flowing current lines + node -->
+    <div class="signal-glyph" aria-hidden="true">
+      <svg viewBox="0 0 88 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,16 Q22,4 44,16 T88,16"  stroke="rgba(34,217,232,.40)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M0,36 Q22,22 44,36 T88,36"  stroke="rgba(34,217,232,.75)" stroke-width="2"   stroke-linecap="round"/>
+        <path d="M0,56 Q22,42 44,56 T88,56"  stroke="rgba(110,120,255,.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="44" cy="36" r="3.5" fill="rgba(34,217,232,.9)"/>
+        <circle cx="44" cy="36" r="8"   stroke="rgba(34,217,232,.28)" stroke-width="1" fill="none"/>
+      </svg>
     </div>
-    <blockquote>
-      <p class="philosophy-quote">
-        "Marketing should <em>compound</em>,<br>not reset every month."
-      </p>
-      <cite class="philosophy-attr">— Quiddity Digital, Mumbai</cite>
-    </blockquote>
+
+    <!-- Meta: instrument label -->
+    <div class="signal-meta">
+      <span class="signal-tag">Signal</span>
+      <span class="signal-coords">Quiddity · Mumbai</span>
+    </div>
+
+    <!-- The statement -->
+    <p class="philosophy-quote signal-text">
+      Marketing should <span class="hl">compound</span>,<br>not reset every month.
+    </p>
+
   </div>
 </div>
 
@@ -825,87 +693,51 @@
 <script src="notion.js"></script>
 <script src="script.js" defer></script>
 
-<!-- ── HIDDEN CURRENT ATMOSPHERE ── -->
+<!-- ── HIDDEN CURRENT — atmosphere & interaction ── -->
 <script>
 (function(){
-  /* ── Bioluminescent particles ── */
-  var container = document.getElementById('heroParticles');
-  if(container){
-    var count = window.innerWidth < 600 ? 16 : 32;
-    for(var i=0;i<count;i++){
-      var el=document.createElement('div');
-      el.className='particle';
-      var size=(Math.random()*2.2+0.8).toFixed(1);
-      /* Scatter across full hero height, not just bottom */
-      var bottom = (Math.random()*80+5).toFixed(1);
-      el.style.cssText=[
-        'width:'+size+'px',
-        'height:'+size+'px',
-        'left:'+(Math.random()*100).toFixed(1)+'%',
-        'bottom:'+bottom+'%',
-        'animation-duration:'+(Math.random()*16+10).toFixed(1)+'s',
-        'animation-delay:-'+(Math.random()*22).toFixed(1)+'s'
+  'use strict';
+
+  /* ── 1. Navbar: add/remove scrolled class for glass effect ── */
+  var nav = document.getElementById('navbar');
+  if (nav) {
+    function updateNav() {
+      nav.classList.toggle('navbar-scrolled', window.scrollY > 32);
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+  }
+
+  /* ── 2. Bioluminescent particles — 70% cyan, 30% violet ── */
+  var pc = document.getElementById('heroParticles');
+  if (pc) {
+    for (var i = 0; i < 34; i++) {
+      var el = document.createElement('div');
+      var isViolet = Math.random() < 0.3;
+      el.className = 'particle' + (isViolet ? ' p-violet' : '');
+      var size = (Math.random() * 1.8 + 0.8).toFixed(1);
+      el.style.cssText = [
+        'width:'  + size + 'px',
+        'height:' + size + 'px',
+        'left:'   + (Math.random() * 100).toFixed(1) + '%',
+        'bottom:' + (Math.random() * 55).toFixed(1) + '%',
+        'animation-duration:'  + (Math.random() * 16 + 10).toFixed(1) + 's',
+        'animation-delay:-'    + (Math.random() * 20).toFixed(1) + 's'
       ].join(';');
-      container.appendChild(el);
+      pc.appendChild(el);
     }
   }
 
-  /* ── Discipline strip: softly cycle the active label ── */
-  var items=document.querySelectorAll('.discipline-item');
-  if(items.length){
-    var cur=0;
-    setInterval(function(){
+  /* ── 3. Discipline strip: calm cyclic highlight ── */
+  var items = document.querySelectorAll('.discipline-item');
+  if (items.length) {
+    var cur = 0;
+    setInterval(function() {
       items[cur].classList.remove('active');
-      cur=(cur+1)%items.length;
+      cur = (cur + 1) % items.length;
       items[cur].classList.add('active');
-    },2600);
+    }, 2800);
   }
-
-  /* ── Navbar: add scrolled class for depth transition ── */
-  var navbar = document.getElementById('navbar');
-  if(navbar){
-    var onScroll = function(){
-      if(window.scrollY > 40){
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    };
-    window.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-  }
-
-  /* ── Stat counters: animate numbers upward on reveal ── */
-  var statNums = document.querySelectorAll('.hstat-n');
-  if('IntersectionObserver' in window && statNums.length){
-    var statObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(!entry.isIntersecting) return;
-        var el = entry.target;
-        var sup = el.querySelector('sup');
-        var suffix = sup ? sup.textContent : '';
-        var raw = el.textContent.replace(suffix,'').trim();
-        var target = parseFloat(raw);
-        if(isNaN(target)){ statObserver.unobserve(el); return; }
-        var start = 0;
-        var duration = 1200;
-        var startTime = null;
-        function tick(ts){
-          if(!startTime) startTime = ts;
-          var progress = Math.min((ts-startTime)/duration, 1);
-          var ease = 1 - Math.pow(1-progress, 3);
-          var val = Math.round(ease * target * 10) / 10;
-          el.innerHTML = (Number.isInteger(target) ? Math.round(val) : val.toFixed(0))
-            + (sup ? '<sup>'+suffix+'</sup>' : '');
-          if(progress < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-        statObserver.unobserve(el);
-      });
-    }, {threshold: 0.6});
-    statNums.forEach(function(n){ statObserver.observe(n); });
-  }
-
 })();
 </script>
 </body>

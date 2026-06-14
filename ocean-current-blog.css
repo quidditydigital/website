@@ -1,0 +1,184 @@
+/* ================================================================
+   QUIDDITY DIGITAL — ocean-current-blog.css
+   "Hidden Current" — Blog article theme + reading-progress channel.
+   Loaded after ocean-current.css on blog.html only.
+   ================================================================ */
+
+/* ── Progress bar (mobile) ──────────────────────────────────── */
+#bp-progress { background: linear-gradient(90deg, var(--current), var(--undertow)) !important; box-shadow: 0 0 16px rgba(34,217,232,.45) !important }
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.bp-hero {
+  background-image:
+    radial-gradient(ellipse 55% 60% at 88% 0%, rgba(110,120,255,.05) 0%, transparent 55%),
+    linear-gradient(180deg, var(--abyss) 0%, var(--depth-1) 100%) !important;
+  border-bottom: 1px solid var(--edge) !important;
+}
+.bp-hero-grid { background-image: linear-gradient(rgba(34,217,232,.04) 1px,transparent 1px), linear-gradient(90deg,rgba(34,217,232,.04) 1px,transparent 1px) !important }
+.bp-hero-glow { background: radial-gradient(circle, rgba(34,217,232,.10) 0%, transparent 65%) !important }
+
+.bp-back { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
+.bp-back:hover { color: var(--current) !important }
+
+.bp-cat { color: var(--current-soft) !important; background: var(--blue-l) !important; border: 1px solid var(--edge-strong) !important; font-family: var(--ff-mono) !important }
+.bp-meta-sep { color: var(--text-muted) !important }
+.bp-meta-item { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
+
+.bp-title { color: var(--text-bright) !important; font-family: var(--ff-h) !important; font-weight: 700 !important }
+.bp-subtitle { color: var(--text-soft) !important }
+
+/* Author bar */
+.bp-author-bar { border-top: 1px solid var(--edge) !important }
+.bp-av, .bp-author-card-av { background: linear-gradient(135deg, var(--current), var(--undertow)) !important; color: var(--abyss) !important; font-family: var(--ff-mono) !important; box-shadow: 0 2px 14px rgba(34,217,232,.25) !important }
+.bp-av--photo, .bp-author-card-av--photo { border-color: var(--edge-strong) !important; box-shadow: 0 4px 16px rgba(34,217,232,.18) !important }
+.bp-author-name, .bp-author-card-name { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
+.bp-author-role, .bp-author-card-role { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
+.bp-av-social { background: rgba(34,217,232,.06) !important; border: 1px solid var(--edge-strong) !important; color: var(--current-soft) !important }
+.bp-av-social:hover { background: rgba(34,217,232,.16) !important; border-color: var(--current) !important }
+
+/* Cover image fade */
+.bp-cover-wrap::after { background: linear-gradient(transparent, var(--depth-1)) !important }
+
+
+/* ── Body / article ─────────────────────────────────────────── */
+.bp-body {
+  background-image:
+    radial-gradient(ellipse 45% 40% at 92% 0%, rgba(34,217,232,.035) 0%, transparent 55%),
+    linear-gradient(180deg, var(--depth-1) 0%, var(--abyss) 100%) !important;
+}
+
+.bp-article p { color: var(--text-soft) !important }
+.bp-article > p:first-of-type { color: var(--text-bright) !important }
+.bp-article h1, .bp-article h2, .bp-article h3 { color: var(--text-bright) !important; font-family: var(--ff-h) !important; font-weight: 600 !important }
+.bp-article h2 { border-bottom: 2px solid var(--edge) !important }
+.bp-article h2::before { background: linear-gradient(180deg, var(--current), var(--undertow)) !important }
+.bp-article strong { color: var(--text-bright) !important }
+.bp-anchor-link { color: var(--current) !important; font-family: var(--ff-mono) !important }
+
+/* Lists */
+.bp-article ul.blog-list li, .bp-article ol.blog-list li { color: var(--text-soft) !important }
+.bp-article ul.blog-list li::before { background: var(--current) !important }
+.bp-article ol.blog-list li::before { background: linear-gradient(135deg, var(--current), var(--undertow)) !important; color: var(--abyss) !important; font-family: var(--ff-mono) !important }
+
+/* Blockquote — de-editorialized: accent bar, no italic, no serif quote-mark */
+.bp-article blockquote { border-left: 3px solid var(--current) !important; background: rgba(34,217,232,.04) !important; color: var(--text-bright) !important; font-style: normal !important; font-family: var(--ff-b) !important }
+.bp-article blockquote:hover { box-shadow: 0 4px 32px rgba(34,217,232,.10) !important }
+.bp-article blockquote::before { display: none !important }
+
+/* Figures */
+.bp-article .blog-figure img { box-shadow: 0 8px 48px rgba(0,0,0,.4) !important }
+.bp-article .blog-figure img:hover { box-shadow: 0 16px 64px rgba(34,217,232,.16) !important }
+.bp-article .blog-figure figcaption { color: var(--text-muted) !important; font-style: normal !important; font-family: var(--ff-mono) !important; font-size: .72rem !important }
+
+/* Callout — recolored from gold to undertow violet */
+.bp-article .blog-callout { background: linear-gradient(135deg, rgba(110,120,255,.08), rgba(110,120,255,.025)) !important; border: 1px solid var(--edge-violet) !important; border-left: 4px solid var(--undertow) !important; color: var(--text-bright) !important; box-shadow: none !important }
+.bp-article .blog-callout:hover { box-shadow: 0 4px 24px rgba(110,120,255,.12) !important }
+
+/* Code */
+.bp-article .blog-code { background: var(--abyss) !important; border: 1px solid var(--edge) !important }
+.bp-article .blog-code::before { color: var(--current) !important; font-family: var(--ff-mono) !important }
+.bp-article .blog-code code { color: var(--text-bright) !important }
+.bp-article code, .bp-article p code, .bp-article li code { background: rgba(34,217,232,.07) !important; color: var(--current-soft) !important; border: 1px solid var(--edge-strong) !important }
+
+/* Table */
+.bp-article .blog-table { box-shadow: none !important; border: 1px solid var(--edge) !important }
+.bp-article .blog-table th { color: var(--text-bright) !important; background: linear-gradient(135deg, rgba(34,217,232,.06), rgba(110,120,255,.04)) !important; border-bottom: 2px solid var(--edge-strong) !important; font-family: var(--ff-mono) !important; font-weight: 700 !important }
+.bp-article .blog-table td { border-bottom: 1px solid var(--edge) !important; color: var(--text-soft) !important }
+.bp-article .blog-table tr:hover td { background: rgba(34,217,232,.03) !important }
+
+/* hr, toggle, links, copy button */
+.bp-article .blog-hr { background: linear-gradient(90deg, transparent, var(--edge-strong) 20%, var(--edge-strong) 80%, transparent) !important }
+.bp-article .blog-toggle { background: var(--depth-2) !important; border: 1px solid var(--edge) !important }
+.bp-article .blog-toggle:hover { border-color: var(--edge-strong) !important }
+.bp-article .blog-toggle summary { color: var(--text-bright) !important; font-family: var(--ff-h) !important; font-weight: 600 !important }
+.bp-article .blog-toggle summary::before { color: var(--current) !important }
+.bp-article .blog-toggle[open] summary { color: var(--current-soft) !important }
+.bp-article a { color: var(--current-soft) !important; text-decoration-color: rgba(34,217,232,.3) !important }
+.bp-article a:hover { color: var(--current) !important; text-decoration-color: rgba(34,217,232,.6) !important }
+.bp-copy-btn { background: rgba(34,217,232,.05) !important; border: 1px solid var(--edge-strong) !important; color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
+.bp-copy-btn:hover { background: rgba(34,217,232,.18) !important; color: var(--current) !important }
+.bp-copy-btn.copied { color: var(--green) !important; border-color: rgba(52,216,168,.3) !important }
+
+/* Inline CTA — gold orb → undertow, gradient → current/undertow */
+.bp-inline-cta { background: linear-gradient(135deg, var(--depth-2) 0%, var(--depth-1) 100%) !important }
+.bp-inline-cta::before { background: radial-gradient(circle, rgba(34,217,232,.18), transparent 65%) !important }
+.bp-inline-cta::after { background: radial-gradient(circle, rgba(110,120,255,.14), transparent 65%) !important }
+.bp-inline-cta-eyebrow { color: var(--current) !important; font-family: var(--ff-mono) !important }
+.bp-inline-cta-title { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
+.bp-inline-cta-desc { color: var(--text-soft) !important }
+.bp-inline-cta-btn { background: linear-gradient(120deg, var(--current), var(--undertow)) !important; color: var(--abyss) !important; box-shadow: 0 4px 20px rgba(34,217,232,.25) !important; font-family: var(--ff-mono) !important; letter-spacing: .04em !important }
+.bp-inline-cta-btn:hover { box-shadow: 0 8px 32px rgba(110,120,255,.35) !important; color: var(--abyss) !important }
+
+/* Tags */
+.bp-tags { border-top: 1px solid var(--edge) !important }
+.bp-tags-label { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
+.bp-tag { color: var(--text-soft) !important; background: var(--depth-2) !important; border: 1.5px solid var(--edge) !important; font-family: var(--ff-mono) !important }
+.bp-tag:hover { border-color: var(--current) !important; color: var(--current-soft) !important; background: rgba(34,217,232,.06) !important }
+
+/* Share bar */
+.bp-share-bar { border-top: 1px solid var(--edge) !important }
+.bp-share-label { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
+.bp-share-btn { color: var(--text-soft) !important; background: var(--depth-2) !important; border: 1.5px solid var(--edge) !important; font-family: var(--ff-mono) !important }
+.bp-share-btn:hover { border-color: var(--current) !important; color: var(--current-soft) !important; background: rgba(34,217,232,.06) !important }
+.bp-share-btn.copied-link { border-color: var(--green) !important; color: var(--green) !important; background: rgba(52,216,168,.06) !important }
+
+/* Author card */
+.bp-author-card { background: var(--depth-2) !important; border: 1.5px solid var(--edge-strong) !important }
+.bp-author-card::before { background: radial-gradient(circle, rgba(34,217,232,.08), transparent 65%) !important }
+.bp-author-card-av::after { background: var(--green) !important; border-color: var(--depth-2) !important }
+.bp-author-card-bio { color: var(--text-soft) !important }
+.bp-author-social { font-family: var(--ff-mono) !important }
+.bp-author-social--li { color: var(--current-soft) !important; border-color: var(--edge-strong) !important; background: rgba(34,217,232,.05) !important }
+.bp-author-social--li:hover { background: rgba(34,217,232,.12) !important }
+.bp-author-social--tw { color: var(--text-bright) !important; border-color: var(--edge) !important; background: rgba(234,244,247,.03) !important }
+.bp-author-social--tw:hover { background: rgba(234,244,247,.07) !important }
+
+/* TOC — desktop */
+.bp-toc-wrap { scrollbar-color: var(--current-dim) transparent !important }
+.bp-toc { background: var(--depth-2) !important; border: 1.5px solid var(--edge) !important }
+.bp-toc-label { color: var(--current) !important; font-family: var(--ff-mono) !important }
+.bp-toc-label::after { background: var(--edge) !important }
+.bp-toc-list li a { color: var(--text-muted) !important; font-family: var(--ff-mono) !important; font-size: .72rem !important }
+.bp-toc-list li a:hover { color: var(--current-soft) !important; background: rgba(34,217,232,.06) !important }
+.bp-toc-list li.toc-active a { color: var(--current) !important; border-left-color: var(--current) !important; background: rgba(34,217,232,.08) !important }
+
+/* TOC — mobile */
+.bp-toc-mobile { background: var(--depth-2) !important; border: 1.5px solid var(--edge) !important }
+.bp-toc-mobile-toggle { color: var(--current) !important; font-family: var(--ff-mono) !important }
+.bp-toc-mobile-body { border-top: 1px solid var(--edge) !important }
+.bp-toc-mobile-body ul li a { color: var(--text-soft) !important; border-bottom: 1px solid var(--edge) !important; font-family: var(--ff-mono) !important; font-size: .74rem !important }
+.bp-toc-mobile-body ul li a:hover { color: var(--current) !important }
+.bp-toc-mobile-body ul li.toc-h3 a { color: var(--text-muted) !important }
+.bp-toc-mobile-body ul li.toc-active a { color: var(--current) !important }
+
+/* Related posts */
+.bp-related { border-top: 2px solid var(--edge) !important }
+.bp-related-label { color: var(--current) !important; font-family: var(--ff-mono) !important }
+.bp-related-heading { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
+.bp-related-card { background: var(--depth-2) !important; border: 1.5px solid var(--edge) !important }
+.bp-related-card:hover { box-shadow: 0 12px 40px rgba(34,217,232,.10) !important; border-color: var(--edge-strong) !important }
+.bp-related-thumb { background: linear-gradient(135deg, rgba(34,217,232,.06), rgba(110,120,255,.04)) !important }
+.bp-related-thumb-ph { color: rgba(34,217,232,.3) !important }
+.bp-related-cat { color: var(--current-soft) !important; font-family: var(--ff-mono) !important }
+.bp-related-title { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
+.bp-related-cta { color: var(--current) !important; font-family: var(--ff-mono) !important }
+
+/* Loading / error */
+.bp-spinner { border: 3px solid var(--edge) !important; border-top-color: var(--current) !important }
+.bp-loading p { color: var(--text-muted) !important }
+.bp-error h2 { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
+.bp-error p { color: var(--text-soft) !important }
+
+
+/* ════════════════════════════════════════════════════════════
+   CURRENT CHANNEL — reading-progress, desktop only.
+   A vertical "depth gauge": fill + pulsing node track the
+   reader's position in the current.
+   ════════════════════════════════════════════════════════════ */
+.current-channel { position: fixed; left: 22px; top: 50%; transform: translateY(-50%); height: 32vh; width: 2px; z-index: 150; display: none }
+.cc-track { position: absolute; inset: 0; background: var(--edge-strong); border-radius: 2px }
+.cc-fill { position: absolute; left: 0; top: 0; width: 100%; height: var(--read-progress, 0%); background: linear-gradient(180deg, var(--current), var(--undertow)); border-radius: 2px; box-shadow: 0 0 14px rgba(34,217,232,.5) }
+.cc-node { position: absolute; left: 50%; top: var(--read-progress, 0%); width: 8px; height: 8px; border-radius: 50%; background: var(--current-soft); transform: translate(-50%,-50%); box-shadow: 0 0 12px var(--current); animation: cc-pulse 2.6s ease-in-out infinite }
+@keyframes cc-pulse { 0%,100% { opacity: .6; transform: translate(-50%,-50%) scale(1) } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.35) } }
+@media (min-width: 1300px) { .current-channel { display: block } }
+@media (prefers-reduced-motion: reduce) { .cc-node { animation: none !important } }
