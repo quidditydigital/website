@@ -3,7 +3,7 @@
    "Hidden Current" — Visual Identity System
    Abstract deep-ocean / bioluminescent / technological aesthetic.
    Typography: Space Grotesk (display) · Inter (body) · Space Mono (data/labels)
-   Replaces hero-redesign.css. Loaded after styles.css on every page.
+   Loaded after styles.css on every page.
    ================================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
@@ -86,6 +86,24 @@ html, body { background: var(--abyss); }
 
 
 /* ════════════════════════════════════════════════════════════
+   DESIGN TOKENS — additions / corrections
+   ════════════════════════════════════════════════════════════ */
+:root {
+  /* Gold — back as a highlighter accent */
+  --gold:      #F59E0B;
+  --gold-hi:   #FBC741;
+  --gold-8:    rgba(245,158,11,.08);
+  --gold-20:   rgba(245,158,11,.20);
+  --gold-35:   rgba(245,158,11,.35);
+
+  /* Text — brighter across the board */
+  --text-bright: #FFFFFF;
+  --text-main:   #E8F0F5;
+  --text-soft:   #C4D8E8;
+  --text-muted:  #7090A8;
+}
+
+/* ════════════════════════════════════════════════════════════
    NAVBAR — glass, blur, cyan/violet edge glow
    ════════════════════════════════════════════════════════════ */
 #navbar {
@@ -103,15 +121,29 @@ html, body { background: var(--abyss); }
   opacity: .3;
   pointer-events: none;
 }
-#navbar.navbar-scrolled {
-  background: rgba(5,11,16,.8) !important;
+#navbar.navbar-scrolled, #navbar.solid {
+  background: rgba(5,11,16,.85) !important;
   border-bottom-color: var(--edge-strong) !important;
   box-shadow: 0 12px 40px rgba(0,0,0,.35) !important;
 }
-.nav-logo { color: var(--text-bright) !important; font-family: var(--ff-h) !important; letter-spacing: -.01em !important; font-style: normal !important }
-.nav-logo em { color: var(--current) !important; font-style: normal !important }
+
+/* ── Logo — pre-cropped wordmark asset (assets/Header.svg).
+   Gold "QUIDDITY" + white "DIGITAL", icon mark already removed
+   at the asset level, so this is just a plain sized image. ── */
+.nav-logo {
+  display: inline-flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  line-height: 0 !important;
+}
+.nav-logo-wrap { display: inline-block; line-height: 0 }
+.nav-logo-img { height: 30px; width: auto; display: block }
+@media (max-width: 768px) {
+  .nav-logo-img { height: 20px }
+}
+
 .nav-links a:not(.nav-cta) {
-  color: var(--text-soft) !important;
+  color: var(--text-muted) !important;
   font-family: var(--ff-mono) !important;
   font-size: .76rem !important;
   letter-spacing: .07em !important;
@@ -125,7 +157,6 @@ html, body { background: var(--abyss); }
   font-size: .85rem !important;
   color: var(--abyss) !important;
 }
-.nav-cal-icon { color: var(--current-soft) !important }
 .hamburger span { background: var(--text-bright) !important }
 
 
@@ -247,14 +278,15 @@ html, body { background: var(--abyss); }
 .hero-h1 .h1-accent {
   position: relative; display: inline-block;
   font-style: normal !important; font-family: inherit !important;
-  font-weight: 500 !important; font-size: 1em !important;
-  letter-spacing: inherit !important; color: var(--undertow-soft) !important;
-}
-.hero-h1 .h1-accent::after {
-  content: ''; position: absolute; left: 0; bottom: -.08em;
-  width: 62%; height: 3px; border-radius: 2px;
-  background: linear-gradient(90deg, var(--current), var(--undertow));
-  opacity: .55;
+  font-weight: 700 !important; font-size: 1em !important;
+  letter-spacing: inherit !important;
+  color: var(--text-bright) !important;
+  background-image: linear-gradient(120deg, transparent 0%, var(--gold-35) 7%, var(--gold-35) 93%, transparent 100%);
+  background-size: 100% .4em;
+  background-position: 0 86%;
+  background-repeat: no-repeat;
+  padding: 0 .05em;
+  border-radius: 2px;
 }
 
 .hero-rule {
@@ -266,7 +298,7 @@ html, body { background: var(--abyss); }
 
 .hero-sub {
   font-family: var(--ff-b) !important; font-size: 1.06rem !important; font-weight: 400 !important;
-  line-height: 1.85 !important; color: var(--text-soft) !important; max-width: 480px !important;
+  line-height: 1.85 !important; color: var(--text-main) !important; max-width: 480px !important;
   margin-bottom: 48px !important; letter-spacing: .005em;
   opacity: 0; animation: fadeInUp .8s var(--ease-current) .45s forwards;
 }
@@ -410,7 +442,23 @@ blockquote .signal-text { font-style: normal }
 #booking::before, #booking::after { display: none !important }
 
 /* shared accent overrides */
-.c-cta, .svc-cat--cta { color: var(--undertow-soft) !important }
+.c-cta {
+  color: var(--text-bright) !important;
+  background-image: linear-gradient(120deg, transparent 0%, var(--gold-35) 7%, var(--gold-35) 93%, transparent 100%);
+  background-size: 100% .36em;
+  background-position: 0 88%;
+  background-repeat: no-repeat;
+  padding: 0 .05em;
+  border-radius: 2px;
+}
+.svc-cat--cta { color: var(--undertow-soft) !important }
+
+/* Gold as section highlighter */
+.c-gold { color: var(--gold) !important }
+.section-h2 em, .section-h2 .c-cta { color: var(--undertow-soft) !important }
+
+/* Main content paragraph copy — bright, near-white */
+.body-p { color: var(--text-main) !important }
 
 
 /* ════════════════════════════════════════════════════════════
@@ -446,7 +494,7 @@ blockquote .signal-text { font-style: normal }
 .hc:hover::before { transform: scaleX(1) }
 .hc-n { color: rgba(34,217,232,.32) !important; font-family: var(--ff-mono) !important; font-size: .64rem !important; letter-spacing: .16em !important; font-weight: 700 !important }
 .hc h3 { color: var(--text-bright) !important; font-family: var(--ff-h) !important; font-weight: 600 !important }
-.hc p { color: var(--text-soft) !important; font-family: var(--ff-b) !important }
+.hc p { color: var(--text-main) !important; font-family: var(--ff-b) !important }
 .hci--grey { background: var(--depth-2) !important; border: 1px solid var(--edge) !important }
 .hc-tag { background: var(--blue-l) !important; color: var(--current-soft) !important; border: 1px solid var(--edge) !important; font-family: var(--ff-mono) !important; letter-spacing: .08em !important; font-weight: 400 !important }
 .hct--cta { background: rgba(110,120,255,.08) !important; color: var(--undertow-soft) !important; border: 1px solid var(--edge-violet) !important }
@@ -460,7 +508,7 @@ blockquote .signal-text { font-style: normal }
 .svc-i { font-family: var(--ff-mono) !important; color: var(--text-muted) !important; letter-spacing: .12em !important; font-weight: 400 !important }
 .svc-cat { font-family: var(--ff-mono) !important; color: var(--current) !important; letter-spacing: .18em !important; font-weight: 400 !important }
 .svc-title { color: var(--text-bright) !important; font-family: var(--ff-h) !important; font-weight: 600 !important }
-.svc-desc { color: var(--text-soft) !important; font-family: var(--ff-b) !important }
+.svc-desc { color: var(--text-main) !important; font-family: var(--ff-b) !important }
 .svc-row--featured { background: rgba(110,120,255,.025) !important; border-color: var(--edge-violet) !important }
 .svc-row--featured:hover { background: rgba(110,120,255,.05) !important }
 .svc-row:nth-child(even):not(.svc-row--featured) .svc-i { color: var(--undertow-soft) !important }
@@ -474,8 +522,8 @@ blockquote .signal-text { font-style: normal }
 .about-quiddity-badge { background: rgba(34,217,232,.04) !important; border: 1.5px solid var(--edge-strong) !important; border-left: 4px solid var(--current) !important }
 .aq-word { color: var(--current-soft) !important; font-family: var(--ff-h) !important }
 .aq-phonetic { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
-.aq-def { color: var(--text-soft) !important }
-.pillar { color: var(--text-soft) !important; transition: var(--t) }
+.aq-def { color: var(--text-main) !important }
+.pillar { color: var(--text-main) !important; transition: var(--t) }
 .pillar:hover { border-color: var(--edge-strong) !important; color: var(--text-bright) !important; background: rgba(34,217,232,.025) !important }
 .p-dot--dark { background: var(--undertow) !important }
 
@@ -487,7 +535,7 @@ blockquote .signal-text { font-style: normal }
 #homeBlogGrid > .blog-card:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1.15fr 1fr }
 #homeBlogGrid > .blog-card:first-child .blog-thumb { aspect-ratio: auto; height: 100%; min-height: 280px }
 #homeBlogGrid > .blog-card:first-child .blog-body { padding: 36px 40px; justify-content: center }
-#homeBlogGrid > .blog-card:first-child .blog-title { font-size: 1.5rem }
+#homeBlogGrid > .blog-card:first-child h3 { font-size: 1.5rem }
 
 #apGrid { align-items: start }
 #apGrid > .blog-card:nth-child(3n+2) { margin-top: 34px }
@@ -502,11 +550,11 @@ blockquote .signal-text { font-style: normal }
 }
 .blog-card:hover::before { transform: scaleX(1) }
 .blog-card:hover { border-color: var(--edge-strong) !important; box-shadow: var(--shadow-md) !important }
-.blog-cat, .bc-cat { color: var(--current) !important; background: var(--blue-l) !important; font-family: var(--ff-mono) !important; letter-spacing: .06em !important }
-.blog-title, .bc-title { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
-.blog-excerpt, .bc-excerpt { color: var(--text-soft) !important }
-.blog-meta, .bc-meta { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
-.blog-link, .bc-link { color: var(--current-soft) !important }
+.bc { color: var(--current) !important; font-family: var(--ff-mono) !important; letter-spacing: .06em !important }
+.blog-card h3 { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
+.blog-exc { color: var(--text-main) !important }
+.blog-meta { color: var(--text-muted) !important; font-family: var(--ff-mono) !important }
+.blog-cta { color: var(--current-soft) !important }
 .blog-thumb-ph { opacity: .3 }
 
 
@@ -524,7 +572,7 @@ blockquote .signal-text { font-style: normal }
 .fg input:focus, .fg select:focus, .fg textarea:focus { background: var(--depth-2) !important; border-color: var(--current) !important; box-shadow: 0 0 0 3px rgba(34,217,232,.1) !important }
 .fg input::placeholder, .fg textarea::placeholder { color: var(--text-muted) !important }
 .step-btn.active { background: rgba(34,217,232,.05) !important }
-.chk { color: var(--text-soft) !important }
+.chk { color: var(--text-main) !important }
 .book-summary { background: rgba(34,217,232,.04) !important; border-color: var(--edge-strong) !important }
 
 
