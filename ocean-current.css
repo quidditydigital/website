@@ -290,17 +290,10 @@ html, body { background: var(--abyss); }
   letter-spacing: inherit !important; color: var(--current-soft) !important;
 }
 .hero-h1 .h1-accent {
-  position: relative; display: inline-block;
   font-style: normal !important; font-family: inherit !important;
   font-weight: 700 !important; font-size: 1em !important;
   letter-spacing: inherit !important;
-  color: var(--text-bright) !important;
-  background-image: linear-gradient(120deg, transparent 0%, var(--gold-35) 7%, var(--gold-35) 93%, transparent 100%);
-  background-size: 100% .4em;
-  background-position: 0 86%;
-  background-repeat: no-repeat;
-  padding: 0 .05em;
-  border-radius: 2px;
+  color: var(--gold) !important;
 }
 
 .hero-rule {
@@ -456,20 +449,11 @@ blockquote .signal-text { font-style: normal }
 #booking::before, #booking::after { display: none !important }
 
 /* shared accent overrides */
-.c-cta {
-  color: var(--text-bright) !important;
-  background-image: linear-gradient(120deg, transparent 0%, var(--gold-35) 7%, var(--gold-35) 93%, transparent 100%);
-  background-size: 100% .36em;
-  background-position: 0 88%;
-  background-repeat: no-repeat;
-  padding: 0 .05em;
-  border-radius: 2px;
-}
+.c-cta { color: var(--gold) !important }
 .svc-cat.svc-cat--cta { color: var(--gold) !important }
 
 /* Gold as section highlighter */
 .c-gold { color: var(--gold) !important }
-.section-h2 em, .section-h2 .c-cta { color: var(--undertow-soft) !important }
 
 /* Main content paragraph copy — bright, near-white */
 .body-p { color: var(--text-main) !important }
