@@ -115,7 +115,7 @@
 <nav id="navbar">
   <div class="container nav-wrap">
     <a href="#home" class="nav-logo" aria-label="Quiddity Digital – Home">
-      <span class="nav-logo-wrap"><img src="assets/Header.svg" alt="Quiddity Digital" class="nav-logo-img"></span>
+      <span class="nav-logo-wrap"><img src="assets/Header-wordmark.svg" alt="Quiddity Digital" class="nav-logo-img"></span>
     </a>
 
     <ul class="nav-links" id="navLinks">
@@ -703,17 +703,17 @@
   /* ── 2. Bioluminescent particles — 70% cyan, 30% violet ── */
   var pc = document.getElementById('heroParticles');
   if (pc) {
-    for (var i = 0; i < 34; i++) {
+    for (var i = 0; i < 58; i++) {
       var el = document.createElement('div');
       var isViolet = Math.random() < 0.3;
       el.className = 'particle' + (isViolet ? ' p-violet' : '');
-      var size = (Math.random() * 1.8 + 0.8).toFixed(1);
+      var size = (Math.random() * 2.6 + 1.6).toFixed(1);
       el.style.cssText = [
         'width:'  + size + 'px',
         'height:' + size + 'px',
         'left:'   + (Math.random() * 100).toFixed(1) + '%',
-        'bottom:' + (Math.random() * 55).toFixed(1) + '%',
-        'animation-duration:'  + (Math.random() * 16 + 10).toFixed(1) + 's',
+        'bottom:' + (Math.random() * 62).toFixed(1) + '%',
+        'animation-duration:'  + (Math.random() * 13 + 9).toFixed(1) + 's',
         'animation-delay:-'    + (Math.random() * 20).toFixed(1) + 's'
       ].join(';');
       pc.appendChild(el);
