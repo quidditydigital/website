@@ -2,11 +2,23 @@
    QUIDDITY DIGITAL — ocean-current.css
    "Hidden Current" — Visual Identity System
    Abstract deep-ocean / bioluminescent / technological aesthetic.
-   Typography: Space Grotesk (display) · Inter (body) · Space Mono (data/labels)
+   Typography: Space Grotesk (display) · Inter (body) · Space Mono
+   (data/labels) · Dash Horizon (display numerals only — digits 0-9)
    Loaded after styles.css on every page.
    ================================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* Dash Horizon — demo charset is digits + A-Z/a-z only (no symbols).
+   Used ONLY where markup isolates pure digits from any suffix glyph
+   (×, %, +), so the missing-glyph fallback risk is zero. */
+@font-face {
+  font-family: 'Dash Horizon';
+  src: url('public/fonts/Dash-Horizon-Demo.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ── DESIGN TOKENS ─────────────────────────────────────────────
    Core palette: abyss / depth (structure) · current / undertow (the
@@ -47,8 +59,10 @@
   --blue-mid:    rgba(34,217,232,.14);
   --blue-border: rgba(34,217,232,.26);
 
-  --cta-from: var(--undertow);
-  --cta-to:   var(--current);
+  /* --cta-from / --cta-to intentionally NOT remapped here —
+     they fall through to styles.css's original gold values
+     (#E1AD01 → #F59E0B). Gold is the site's CTA colour;
+     current/undertow are the ocean-identity accent colours. */
 
   --white:   var(--depth-1);
   --bg:      var(--abyss);
@@ -71,7 +85,7 @@
   --shadow:      0 10px 32px rgba(0,0,0,.4);
   --shadow-md:   0 16px 48px rgba(0,0,0,.5);
   --shadow-blue: 0 8px 32px rgba(34,217,232,.20);
-  --shadow-cta:  0 10px 36px rgba(110,120,255,.26);
+  --shadow-cta:  0 10px 36px rgba(245,158,11,.30);
 }
 
 /* ── GLOBAL BASE ──────────────────────────────────────────────── */
@@ -309,12 +323,12 @@ html, body { background: var(--abyss); }
   display: inline-flex; align-items: center; gap: 10px; padding: 15px 32px;
   font-family: var(--ff-mono); font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
   color: var(--abyss);
-  background: linear-gradient(120deg, var(--current) 0%, var(--undertow) 100%);
+  background: linear-gradient(135deg, var(--cta-from), var(--cta-to));
   border: none; border-radius: 3px; cursor: pointer; text-decoration: none;
   transition: transform .4s var(--ease-current), box-shadow .4s var(--ease-current);
-  box-shadow: 0 6px 28px rgba(34,217,232,.18);
+  box-shadow: 0 6px 28px rgba(245,158,11,.22);
 }
-.btn-ocean-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(110,120,255,.32) }
+.btn-ocean-primary:hover { transform: translateY(-3px); box-shadow: var(--shadow-cta) }
 .btn-ocean-primary .btn-arr { transition: transform .4s var(--ease-current); display: inline-block }
 .btn-ocean-primary:hover .btn-arr { transform: translateX(5px) }
 
@@ -338,7 +352,7 @@ html, body { background: var(--abyss); }
 /* stats row */
 .hero-stats { display: flex !important; flex-wrap: wrap !important; gap: 0 !important; margin-top: 46px !important; padding-top: 34px !important; border-top: 1px solid var(--edge) !important; opacity: 0; animation: fadeInUp .7s var(--ease-current) .88s forwards }
 .hstat { flex: 1; min-width: 100px; padding: 0 32px 0 0 !important; position: relative }
-.hstat-n { font-family: var(--ff-h) !important; font-size: 2.3rem !important; font-weight: 700 !important; line-height: 1 !important; color: var(--current) !important; letter-spacing: -.02em !important }
+.hstat-n { font-family: 'Dash Horizon', var(--ff-h) !important; font-size: 2.3rem !important; font-weight: 700 !important; line-height: 1 !important; color: var(--current) !important; letter-spacing: -.02em !important }
 .hstat-n sup { font-family: var(--ff-mono) !important; font-size: .5em !important; font-weight: 700 !important; vertical-align: super !important; color: var(--undertow-soft) !important }
 .hstat-l { font-family: var(--ff-mono) !important; font-size: .6rem !important; font-weight: 400 !important; letter-spacing: .12em !important; text-transform: uppercase !important; color: var(--text-muted) !important; margin-top: 6px !important; display: block !important }
 .hstat:nth-child(even) .hstat-n { color: var(--undertow-soft) !important }
@@ -391,7 +405,7 @@ html, body { background: var(--abyss); }
   letter-spacing: -.005em !important; color: var(--text-bright) !important;
 }
 .signal-text .hl, .philosophy-quote em {
-  color: var(--current-soft) !important; font-weight: 600 !important;
+  color: var(--gold) !important; font-weight: 600 !important;
   font-style: normal !important; font-family: inherit !important; font-size: 1em !important; letter-spacing: inherit !important;
 }
 .philosophy-attr { display: none !important }
@@ -451,7 +465,7 @@ blockquote .signal-text { font-style: normal }
   padding: 0 .05em;
   border-radius: 2px;
 }
-.svc-cat--cta { color: var(--undertow-soft) !important }
+.svc-cat.svc-cat--cta { color: var(--gold) !important }
 
 /* Gold as section highlighter */
 .c-gold { color: var(--gold) !important }
@@ -464,7 +478,7 @@ blockquote .signal-text { font-style: normal }
 /* ════════════════════════════════════════════════════════════
    BUTTONS
    ════════════════════════════════════════════════════════════ */
-.btn-cta { box-shadow: 0 4px 20px rgba(110,120,255,.18) !important }
+.btn-cta { box-shadow: 0 4px 20px rgba(245,158,11,.20) !important }
 .btn-cta:hover { box-shadow: var(--shadow-cta) !important }
 .btn-ghost:hover { background: var(--blue-l) !important; color: var(--current-soft) !important; border-color: var(--current) !important }
 
@@ -492,12 +506,12 @@ blockquote .signal-text { font-style: normal }
   transform: scaleX(0); transform-origin: left; transition: transform .8s var(--ease-current);
 }
 .hc:hover::before { transform: scaleX(1) }
-.hc-n { color: rgba(34,217,232,.32) !important; font-family: var(--ff-mono) !important; font-size: .64rem !important; letter-spacing: .16em !important; font-weight: 700 !important }
+.hc-n { color: rgba(34,217,232,.32) !important; font-family: 'Dash Horizon', var(--ff-mono) !important; font-size: .64rem !important; letter-spacing: .16em !important; font-weight: 700 !important }
 .hc h3 { color: var(--text-bright) !important; font-family: var(--ff-h) !important; font-weight: 600 !important }
 .hc p { color: var(--text-main) !important; font-family: var(--ff-b) !important }
 .hci--grey { background: var(--depth-2) !important; border: 1px solid var(--edge) !important }
 .hc-tag { background: var(--blue-l) !important; color: var(--current-soft) !important; border: 1px solid var(--edge) !important; font-family: var(--ff-mono) !important; letter-spacing: .08em !important; font-weight: 400 !important }
-.hct--cta { background: rgba(110,120,255,.08) !important; color: var(--undertow-soft) !important; border: 1px solid var(--edge-violet) !important }
+.hct--cta { background: rgba(245,158,11,.08) !important; color: var(--gold) !important; border: 1px solid rgba(245,158,11,.30) !important }
 
 
 /* ════════════════════════════════════════════════════════════
@@ -505,12 +519,12 @@ blockquote .signal-text { font-style: normal }
    ════════════════════════════════════════════════════════════ */
 .svc-row { border-bottom: 1px solid var(--edge) !important; transition: background .5s, padding-left .5s, border-color .5s }
 .svc-row:hover { background: rgba(34,217,232,.025) !important; border-radius: var(--r) }
-.svc-i { font-family: var(--ff-mono) !important; color: var(--text-muted) !important; letter-spacing: .12em !important; font-weight: 400 !important }
+.svc-i { font-family: 'Dash Horizon', var(--ff-mono) !important; color: var(--text-muted) !important; letter-spacing: .12em !important; font-weight: 400 !important }
 .svc-cat { font-family: var(--ff-mono) !important; color: var(--current) !important; letter-spacing: .18em !important; font-weight: 400 !important }
 .svc-title { color: var(--text-bright) !important; font-family: var(--ff-h) !important; font-weight: 600 !important }
 .svc-desc { color: var(--text-main) !important; font-family: var(--ff-b) !important }
-.svc-row--featured { background: rgba(110,120,255,.025) !important; border-color: var(--edge-violet) !important }
-.svc-row--featured:hover { background: rgba(110,120,255,.05) !important }
+.svc-row--featured { background: rgba(245,158,11,.04) !important; border-color: rgba(245,158,11,.22) !important }
+.svc-row--featured:hover { background: rgba(245,158,11,.07) !important }
 .svc-row:nth-child(even):not(.svc-row--featured) .svc-i { color: var(--undertow-soft) !important }
 .svc-row:nth-child(even):not(.svc-row--featured):hover { padding-left: 22px !important }
 .svc-row:nth-child(odd):hover { padding-left: 14px !important }
