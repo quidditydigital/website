@@ -27,6 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="styles.css"/>
   <link rel="stylesheet" href="ocean-current.css"/>
+  <link rel="stylesheet" href="booking-v2.css"/>
   <style>
     /* Layout-only rules not covered by ocean-current.css */
     .about-copy-full { max-width: 780px; margin: 0 auto }
@@ -115,7 +116,7 @@
 <nav id="navbar">
   <div class="container nav-wrap">
     <a href="#home" class="nav-logo" aria-label="Quiddity Digital – Home">
-      <span class="nav-logo-wrap"><img src="assets/Header-wordmark-v3.svg" alt="Quiddity Digital" class="nav-logo-img"></span>
+      <span class="nav-logo-wrap"><img src="assets/Header-wordmark.svg" alt="Quiddity Digital" class="nav-logo-img"></span>
     </a>
 
     <ul class="nav-links" id="navLinks">
@@ -458,153 +459,352 @@
       <div class="section-tag">Get Started</div>
       <h2 class="section-h2">Book a free <span class="c-blue">strategy session</span></h2>
       <p class="body-p">30 minutes. Zero commitment. We'll diagnose your biggest growth blocker and tell you exactly what we'd do about it — whether you work with us or not.</p>
-      <p style="font-size:.85rem;color:var(--tx-lt);margin-top:4px">Slots within the next 7 days are unavailable — the earliest available date is highlighted on the calendar.</p>
+      <p style="font-size:.85rem;color:var(--text-muted);margin-top:4px">The earliest available slot is highlighted. Slots within the next 7 days are reserved.</p>
       <div class="tz-pill" id="tzPill">🌐 Detecting timezone…</div>
     </div>
 
     <div class="booking-shell reveal d1" id="bookingShell">
 
-      <!-- Step tabs -->
-      <div class="steps-bar">
+      <!-- 4-Step progress bar -->
+      <div class="steps-bar" id="stepsBar" data-step="1">
         <div class="step-btn active" id="tab1">
           <span class="s-num">Step 01</span>
-          <span class="s-title">Pick Date &amp; Time</span>
+          <span class="s-title">Select Date</span>
         </div>
         <div class="step-btn" id="tab2">
           <span class="s-num">Step 02</span>
+          <span class="s-title">Select Time</span>
+        </div>
+        <div class="step-btn" id="tab3">
+          <span class="s-num">Step 03</span>
           <span class="s-title">Your Details</span>
         </div>
-      </div>
-
-      <!-- STEP 1 -->
-      <div class="step-panel active" id="step1">
-        <p class="panel-lbl">Select an available date</p>
-
-        <div class="cal-wrap">
-          <div class="cal-header">
-            <div class="cal-title" id="calTitle">Loading…</div>
-            <div class="cal-nav">
-              <button id="calPrev" aria-label="Previous month">&#8249;</button>
-              <button id="calNext" aria-label="Next month">&#8250;</button>
-            </div>
-          </div>
-          <div class="cal-grid">
-            <div class="cal-dow">
-              <span>Su</span><span>Mo</span><span>Tu</span>
-              <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-            </div>
-            <div class="cal-days" id="calDays"></div>
-          </div>
-          <div class="cal-legend">
-            <div class="leg-item"><span class="leg-dot leg-dot--avail"></span>Available</div>
-            <div class="leg-item"><span class="leg-dot leg-dot--block"></span>Unavailable</div>
-            <div class="leg-item"><span class="leg-dot leg-dot--sel"></span>Selected</div>
-          </div>
-        </div>
-
-        <div class="picked-date-show" id="pickedDateShow">
-          <span>📅</span>
-          <span class="pds-text" id="pickedDateText"></span>
-          <span class="pds-chip">⏳ Request Pending</span>
-        </div>
-
-        <p class="panel-lbl" style="margin-top:28px">Select a time slot</p>
-        <div class="times-row" id="timeGrid"></div>
-        <div class="custom-wrap" id="customWrap">
-          <input type="time" id="customTimeField"/>
-          <span>Your preferred time</span>
-        </div>
-
-        <div class="panel-footer">
-          <button class="btn btn-cta" onclick="proceedStep1()">
-            Continue to Details <span class="btn-arr">→</span>
-          </button>
+        <div class="step-btn" id="tab4">
+          <span class="s-num">Step 04</span>
+          <span class="s-title">Review</span>
         </div>
       </div>
 
-      <!-- STEP 2 -->
-      <div class="step-panel" id="step2">
+      <!-- Two-column body: steps left, Dive Brief right -->
+      <div class="bk-body">
 
-        <div class="book-summary" id="bookSummary"></div>
+        <!-- ── STEPS ── -->
+        <div class="bk-steps-col">
 
-        <form id="bookingForm" novalidate>
-          <!--
-            HONEYPOT: visually hidden, never touched by real users.
-            Bots fill it — doPost() silently succeeds and discards the submission.
-          -->
-          <input
-            type="text"
-            id="__hp"
-            name="__hp"
-            value=""
-            tabindex="-1"
-            autocomplete="off"
-            aria-hidden="true"
-            style="position:absolute;left:-9999px;opacity:0;pointer-events:none;width:0;height:0;"
-          />
-          <div class="form-grid">
-            <div class="fg">
-              <label for="fName">Your Name <span class="req">*</span></label>
-              <input type="text" id="fName" placeholder="e.g. Amaan Khan" required/>
-            </div>
-            <div class="fg">
-              <label for="fEmail">Email Address <span class="req">*</span></label>
-              <input type="email" id="fEmail" placeholder="you@yourcompany.com" required autocomplete="email"/>
-              <span class="field-hint" id="fEmailHint"></span>
-            </div>
-            <div class="fg">
-              <label for="fPhone">WhatsApp / Phone <span class="opt">(optional)</span></label>
-              <input type="tel" id="fPhone" placeholder="+91 73044 80555"/>
-            </div>
-            <div class="fg">
-              <label for="fBiz">Type of Business <span class="req">*</span></label>
-              <input type="text" id="fBiz" placeholder="e.g. D2C Brand, SaaS, Local Service" required/>
-            </div>
-            <div class="fg fg-full">
-              <label for="fGoals">What's your biggest growth challenge right now?</label>
-              <textarea id="fGoals" rows="3" placeholder="E.g. Our ads aren't converting. We're getting traffic but no sales. We've tried SEO but it's not moving. We have no clear strategy…"></textarea>
-            </div>
-            <div class="fg fg-full">
-              <label>Services you're most interested in</label>
-              <div class="checks-grid">
-                <label class="chk"><input type="checkbox" class="svc-chk" value="SEO"/> Search Engine Optimisation</label>
-                <label class="chk"><input type="checkbox" class="svc-chk" value="Social Media"/> Social Media Marketing</label>
-                <label class="chk"><input type="checkbox" class="svc-chk" value="Paid Ads"/> Google &amp; Meta Ads</label>
-                <label class="chk"><input type="checkbox" class="svc-chk" value="Content"/> Content Marketing</label>
-                <label class="chk"><input type="checkbox" class="svc-chk" value="Custom Strategy"/> Custom Growth Strategy</label>
-                <label class="chk"><input type="checkbox" class="svc-chk" value="Analytics"/> Analytics &amp; Reporting</label>
+          <!-- Race-condition conflict banner (hidden by default) -->
+          <div class="date-conflict-msg" id="dateConflictMsg" style="margin:24px 36px 0;display:none;align-items:center">
+            This session was just claimed by another business. Please select a new available date.
+          </div>
+
+          <!-- ─────────────────────────────
+               STEP 1 — DATE
+          ───────────────────────────── -->
+          <div class="step-panel active" id="step1">
+            <p class="panel-lbl">Select an available date</p>
+
+            <div class="cal-wrap" style="position:relative">
+              <!-- Loading overlay -->
+              <div class="cal-loading-overlay" id="calLoadingOverlay">
+                <div class="cal-spinner"></div>
+              </div>
+
+              <div class="cal-header">
+                <div class="cal-title" id="calTitle">Loading…</div>
+                <div class="cal-nav">
+                  <button id="calPrev" aria-label="Previous month">&#8249;</button>
+                  <button id="calNext" aria-label="Next month">&#8250;</button>
+                </div>
+              </div>
+              <div class="cal-grid">
+                <div class="cal-dow">
+                  <span>Su</span><span>Mo</span><span>Tu</span>
+                  <span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                </div>
+                <div class="cal-days" id="calDays"></div>
+              </div>
+              <div class="cal-legend">
+                <div class="leg-item"><span class="leg-dot leg-dot--avail"></span>Available</div>
+                <div class="leg-item"><span class="leg-dot leg-dot--block"></span>Unavailable</div>
+                <div class="leg-item"><span class="leg-dot leg-dot--sel"></span>Selected</div>
               </div>
             </div>
+
+            <div class="panel-footer">
+              <span class="panel-footer-note">Slots open 8+ days from today</span>
+              <button class="btn btn-cta" onclick="proceedStep1()">
+                Continue <span class="btn-arr">→</span>
+              </button>
+            </div>
           </div>
 
-          <div class="form-footer">
-            <button type="button" class="btn btn-ghost btn-sm" onclick="goToStep(1)">← Back</button>
-            <button type="submit" class="btn btn-cta" id="submitBtn">Request My Session →</button>
-            <span class="form-note">You'll receive a confirmation email once we approve your slot.</span>
+          <!-- ─────────────────────────────
+               STEP 2 — TIME
+          ───────────────────────────── -->
+          <div class="step-panel" id="step2">
+            <p class="panel-lbl">Select a time slot</p>
+
+            <div class="times-grid-v2" id="timeGridV2"></div>
+
+            <div class="custom-time-reveal" id="customTimeReveal">
+              <input type="time" id="customTimeFieldV2" aria-label="Preferred time"/>
+              <span>Your preferred time (we'll confirm availability)</span>
+            </div>
+
+            <div class="panel-footer">
+              <button class="btn-back" onclick="goToStep(1)">← Back</button>
+              <button class="btn btn-cta" onclick="proceedStep2()">
+                Continue <span class="btn-arr">→</span>
+              </button>
+            </div>
           </div>
-        </form>
 
-      </div>
-    </div>
+          <!-- ─────────────────────────────
+               STEP 3 — DETAILS
+          ───────────────────────────── -->
+          <div class="step-panel" id="step3">
 
-    <!-- Success state -->
+            <!-- Session summary banner -->
+            <div class="session-banner" id="sessionBanner3">
+              <span class="sb-icon">📍</span>
+              <span class="sb-text">—</span>
+              <span class="sb-chip">Awaiting Review</span>
+            </div>
+
+            <!-- Honeypot -->
+            <input type="text" id="__hp" name="__hp" value="" tabindex="-1" autocomplete="off"
+              aria-hidden="true"
+              style="position:absolute;left:-9999px;opacity:0;pointer-events:none;width:0;height:0;"/>
+
+            <div class="form-grid">
+
+              <!-- Name -->
+              <div class="fg">
+                <label for="fName">Full Name <span class="req">*</span></label>
+                <input type="text" id="fName" placeholder="e.g. Amaan Khan" required autocomplete="name"/>
+              </div>
+
+              <!-- Email -->
+              <div class="fg">
+                <label for="fEmail">Email Address <span class="req">*</span></label>
+                <input type="email" id="fEmail" placeholder="you@yourcompany.com" required autocomplete="email"/>
+                <span class="field-hint" id="fEmailHint"></span>
+              </div>
+
+              <!-- Phone -->
+              <div class="fg">
+                <label for="fPhone">WhatsApp / Phone <span class="opt">(optional)</span></label>
+                <input type="tel" id="fPhone" placeholder="+91 73044 80555" autocomplete="tel"/>
+              </div>
+
+              <!-- Business Type -->
+              <div class="fg">
+                <label for="fBiz">Type of Business <span class="req">*</span></label>
+                <input type="text" id="fBiz" placeholder="e.g. D2C Brand, SaaS, Local Service" required/>
+              </div>
+
+              <!-- Website -->
+              <div class="fg fg-full">
+                <label for="fWebsite">Website or Social Profile <span class="opt">(optional)</span></label>
+                <input type="url" id="fWebsite" placeholder="https://yourbrand.com or @handle"/>
+              </div>
+
+              <!-- Primary Goal -->
+              <div class="fg fg-full">
+                <label>What is your primary goal? <span class="req">*</span></label>
+                <div class="radio-group">
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Generate More Leads"/> Generate More Leads</label>
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Increase Sales"/> Increase Sales</label>
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Improve Branding"/> Improve Branding</label>
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Grow Organic Traffic"/> Grow Organic Traffic</label>
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Improve SEO"/> Improve SEO</label>
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Scale Paid Ads"/> Scale Paid Ads</label>
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Grow Social Media"/> Grow Social Media</label>
+                  <label class="radio-opt"><input type="radio" name="primaryGoal" value="Build Marketing Strategy"/> Build Marketing Strategy</label>
+                </div>
+              </div>
+
+              <!-- What are you looking for -->
+              <div class="fg fg-full">
+                <label>What are you looking for help with?</label>
+                <div class="outcome-grid">
+                  <label class="outcome-chk"><input type="checkbox" class="svc-chk" value="Getting More Leads"/> Getting More Leads</label>
+                  <label class="outcome-chk"><input type="checkbox" class="svc-chk" value="Improving Website Conversions"/> Improving Website Conversions</label>
+                  <label class="outcome-chk"><input type="checkbox" class="svc-chk" value="Ranking Higher On Google"/> Ranking Higher On Google</label>
+                  <label class="outcome-chk"><input type="checkbox" class="svc-chk" value="Growing Social Media"/> Growing Social Media</label>
+                  <label class="outcome-chk"><input type="checkbox" class="svc-chk" value="Running Paid Advertising"/> Running Paid Advertising</label>
+                  <label class="outcome-chk"><input type="checkbox" class="svc-chk" value="Build A Marketing Strategy"/> Building A Marketing Strategy</label>
+                  <label class="outcome-chk"><input type="checkbox" class="svc-chk" value="Tracking Performance"/> Tracking Performance</label>
+                </div>
+              </div>
+
+              <!-- Challenge -->
+              <div class="fg fg-full">
+                <label for="fChallenge">Tell us more about your current challenge</label>
+                <textarea id="fChallenge" rows="3"
+                  placeholder="We're getting traffic but not enough conversions… We've tried SEO but aren't seeing results… We need a clear growth strategy…"></textarea>
+              </div>
+
+            </div>
+
+            <!-- Optional qualification fields (collapsed) -->
+            <div class="opt-section">
+              <button class="opt-section-toggle" type="button" aria-expanded="false">
+                <span class="toggle-icon">▶</span>
+                Optional · Help us prepare better for your session
+              </button>
+              <div class="opt-section-body">
+                <div class="form-grid" style="margin-top:0">
+
+                  <!-- Budget -->
+                  <div class="fg fg-full">
+                    <label>Monthly Marketing Budget</label>
+                    <div class="radio-group">
+                      <label class="radio-opt"><input type="radio" name="budget" value="Under ₹10k"/> Under ₹10k</label>
+                      <label class="radio-opt"><input type="radio" name="budget" value="₹10k-₹50k"/> ₹10k – ₹50k</label>
+                      <label class="radio-opt"><input type="radio" name="budget" value="₹50k-1L"/> ₹50k – ₹1L</label>
+                      <label class="radio-opt"><input type="radio" name="budget" value="₹1L-5L"/> ₹1L – ₹5L</label>
+                      <label class="radio-opt"><input type="radio" name="budget" value="₹5L+"/> ₹5L+</label>
+                    </div>
+                  </div>
+
+                  <!-- Business Stage -->
+                  <div class="fg fg-full">
+                    <label>Business Stage</label>
+                    <div class="radio-group">
+                      <label class="radio-opt"><input type="radio" name="bizStage" value="Just Starting"/> Just Starting</label>
+                      <label class="radio-opt"><input type="radio" name="bizStage" value="Getting First Customers"/> Getting First Customers</label>
+                      <label class="radio-opt"><input type="radio" name="bizStage" value="Growing Consistently"/> Growing Consistently</label>
+                      <label class="radio-opt"><input type="radio" name="bizStage" value="Scaling Aggressively"/> Scaling Aggressively</label>
+                    </div>
+                  </div>
+
+                  <!-- Team Size -->
+                  <div class="fg">
+                    <label>Team Size</label>
+                    <div class="radio-group" style="grid-template-columns:1fr 1fr">
+                      <label class="radio-opt"><input type="radio" name="teamSize" value="Solo Founder"/> Solo Founder</label>
+                      <label class="radio-opt"><input type="radio" name="teamSize" value="2-5"/> 2–5</label>
+                      <label class="radio-opt"><input type="radio" name="teamSize" value="6-20"/> 6–20</label>
+                      <label class="radio-opt"><input type="radio" name="teamSize" value="20+"/> 20+</label>
+                    </div>
+                  </div>
+
+                  <!-- Referral -->
+                  <div class="fg">
+                    <label>How did you hear about us?</label>
+                    <div class="radio-group" style="grid-template-columns:1fr 1fr">
+                      <label class="radio-opt"><input type="radio" name="referral" value="Google"/> Google</label>
+                      <label class="radio-opt"><input type="radio" name="referral" value="Blog"/> Blog</label>
+                      <label class="radio-opt"><input type="radio" name="referral" value="LinkedIn"/> LinkedIn</label>
+                      <label class="radio-opt"><input type="radio" name="referral" value="Instagram"/> Instagram</label>
+                      <label class="radio-opt"><input type="radio" name="referral" value="Referral"/> Referral</label>
+                      <label class="radio-opt"><input type="radio" name="referral" value="Other"/> Other</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-footer">
+              <button class="btn-back" onclick="goToStep(2)">← Back</button>
+              <button class="btn btn-cta" onclick="proceedStep3()">
+                Review &amp; Submit <span class="btn-arr">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ─────────────────────────────
+               STEP 4 — REVIEW & SUBMIT
+          ───────────────────────────── -->
+          <div class="step-panel" id="step4">
+
+            <!-- Review cards -->
+            <p class="panel-lbl" style="margin-bottom:16px">Review your session request</p>
+            <div class="review-grid" id="reviewCards"></div>
+
+            <!-- What to expect -->
+            <div class="expect-panel">
+              <div class="ep-heading">What to Expect</div>
+              <div class="expect-items">
+                <div class="expect-item">30 Minute Growth Consultation</div>
+                <div class="expect-item">Marketing &amp; Website Review</div>
+                <div class="expect-item">Growth Opportunities Assessment</div>
+                <div class="expect-item">Strategic Recommendations</div>
+                <div class="expect-item">No Pressure Sales Conversation</div>
+                <div class="expect-item">Follow-Up Roadmap (If Applicable)</div>
+              </div>
+            </div>
+
+            <div class="panel-footer">
+              <button class="btn-back" onclick="goToStep(3)">← Back</button>
+              <button class="btn btn-cta" id="submitBookingBtn" onclick="submitBooking()">
+                Request My Session <span class="btn-arr">→</span>
+              </button>
+              <span class="panel-footer-note">You'll receive a confirmation email once we approve your slot.</span>
+            </div>
+
+          </div>
+
+        </div><!-- /bk-steps-col -->
+
+        <!-- ── DIVE BRIEF PANEL ── -->
+        <div class="dive-brief db-empty" id="diveBrief">
+          <div class="db-heading">Dive Brief</div>
+
+          <div class="db-row db-dim" id="db-date">
+            <span class="db-label">Session Date</span>
+            <span class="db-value dv-gold">—</span>
+          </div>
+          <div class="db-row db-dim" id="db-time">
+            <span class="db-label">Session Time</span>
+            <span class="db-value dv-gold">—</span>
+          </div>
+          <div class="db-row db-dim" id="db-biz">
+            <span class="db-label">Business</span>
+            <span class="db-value">—</span>
+          </div>
+          <div class="db-row db-dim" id="db-goal">
+            <span class="db-label">Primary Goal</span>
+            <span class="db-value">—</span>
+          </div>
+          <div class="db-row db-dim" id="db-svc">
+            <span class="db-label">Looking For</span>
+            <span class="db-value dv-cyan">—</span>
+          </div>
+
+          <div class="db-readiness">
+            <div class="db-label">Readiness</div>
+            <div class="db-bar-track"><div class="db-bar-fill"></div></div>
+            <span class="db-pct">0%</span>
+          </div>
+
+          <div class="db-status-chip">Awaiting Review</div>
+        </div>
+
+      </div><!-- /bk-body -->
+
+    </div><!-- /bookingShell -->
+
+    <!-- ── SUCCESS STATE ── -->
     <div id="bookingSuccess">
       <div class="success-ring">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--current)"
+          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"/>
         </svg>
       </div>
-      <h3>Request Received!</h3>
-      <p>We've got your booking request and will confirm your session via email within 24 hours. Check your inbox — and your spam folder just in case.</p>
+      <p class="success-id">Booking ID: <span>—</span></p>
+      <h3>Request Received</h3>
+      <p>We'll review your business and confirm your consultation within 24 hours. Check your inbox — and your spam folder just in case. This consultation is not automatically confirmed.</p>
       <div class="success-actions">
-        <div class="pending-chip">⏳ Pending Approval</div>
-        <button class="btn btn-outline btn-sm" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+        <div class="pending-chip">⏳ Awaiting Review</div>
+        <button class="btn btn-ghost btn-sm" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
       </div>
     </div>
 
   </div>
 </section>
-
 
 <!-- ══════════════════════════════════════════
      FOOTER  #contact
@@ -684,6 +884,7 @@
 <script src="config.js"></script>
 <script src="notion.js"></script>
 <script src="script.js" defer></script>
+<script src="booking-v2.js" defer></script>
 
 <!-- ── HIDDEN CURRENT — atmosphere & interaction ── -->
 <script>

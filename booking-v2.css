@@ -1,0 +1,848 @@
+/* ================================================================
+   QUIDDITY DIGITAL — booking-v2.css
+   4-Step "Hidden Current" Booking System
+   Layered on top of ocean-current.css. Never modifies styles.css.
+   ================================================================ */
+
+/* ══════════════════════════════════════════════════════════════
+   STEP PROGRESS BAR — 4 steps
+   ══════════════════════════════════════════════════════════════ */
+.steps-bar {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  border-bottom: 1px solid var(--edge) !important;
+  background: rgba(5,11,16,.4) !important;
+  position: relative;
+}
+
+/* Animated current line below bar */
+.steps-bar::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  height: 2px; width: 25%;
+  background: linear-gradient(90deg, var(--current), var(--undertow));
+  transition: left .45s var(--ease-current), width .45s var(--ease-current);
+  pointer-events: none;
+}
+.steps-bar[data-step="1"]::after { left: 0;   width: 25% }
+.steps-bar[data-step="2"]::after { left: 25%;  width: 25% }
+.steps-bar[data-step="3"]::after { left: 50%;  width: 25% }
+.steps-bar[data-step="4"]::after { left: 75%;  width: 25% }
+
+.step-btn {
+  padding: 14px 12px !important;
+  border-bottom: none !important;
+  text-align: center !important;
+  cursor: default;
+  transition: background .3s var(--ease-current) !important;
+  position: relative;
+}
+.step-btn .s-num {
+  color: var(--text-muted) !important;
+  font-size: .58rem !important;
+  letter-spacing: .15em !important;
+}
+.step-btn .s-title {
+  font-size: .78rem !important;
+  color: var(--text-muted) !important;
+  font-family: var(--ff-h) !important;
+}
+.step-btn.active .s-num   { color: var(--current) !important }
+.step-btn.active .s-title { color: var(--text-bright) !important }
+.step-btn.active { background: rgba(34,217,232,.05) !important }
+.step-btn.done .s-num, .step-btn.done .s-title { color: rgba(34,217,232,.45) !important }
+.step-btn.done .s-title::before {
+  content: '✓ ';
+  color: var(--current);
+  font-size: .7em;
+}
+
+@media (max-width: 600px) {
+  .step-btn .s-title { display: none }
+  .step-btn .s-num { font-size: .6rem; letter-spacing: .08em }
+  .step-btn { padding: 12px 6px !important }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BOOKING SHELL — two-column layout above 900px
+   ══════════════════════════════════════════════════════════════ */
+#bookingShell {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.bk-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 520px;
+}
+
+@media (min-width: 900px) {
+  .bk-body {
+    grid-template-columns: 1fr 300px;
+  }
+}
+
+/* Step panels */
+.step-panel { padding: 36px !important }
+@media (max-width: 600px) {
+  .step-panel { padding: 24px 18px !important }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DIVE BRIEF — live summary sidebar
+   ══════════════════════════════════════════════════════════════ */
+.dive-brief {
+  background: rgba(5,11,16,.5);
+  border-left: 1px solid var(--edge);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  order: -1; /* mobile: top */
+}
+
+@media (min-width: 900px) {
+  .dive-brief { order: 0 } /* desktop: right column */
+}
+
+@media (max-width: 899px) {
+  .dive-brief {
+    border-left: none;
+    border-bottom: 1px solid var(--edge);
+    padding: 20px 18px;
+  }
+  /* collapse on mobile when nothing entered yet */
+  .dive-brief.db-empty { display: none }
+}
+
+.db-heading {
+  font-family: var(--ff-mono);
+  font-size: .58rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--current);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.db-heading::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--current);
+  box-shadow: 0 0 6px var(--current);
+  animation: db-pulse 2s ease-in-out infinite;
+}
+@keyframes db-pulse {
+  0%,100% { opacity: 1; transform: scale(1) }
+  50%      { opacity: .4; transform: scale(.7) }
+}
+
+.db-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--edge);
+  transition: opacity .3s;
+}
+.db-row:last-of-type { border-bottom: none }
+.db-row.db-dim { opacity: .35 }
+
+.db-label {
+  font-family: var(--ff-mono);
+  font-size: .55rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.db-value {
+  font-family: var(--ff-h);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  min-height: 1.1em;
+  transition: color .3s;
+}
+.db-value.dv-gold { color: var(--gold) !important }
+.db-value.dv-cyan { color: var(--current-soft) !important }
+
+/* Readiness bar */
+.db-readiness {
+  margin-top: 16px;
+}
+.db-readiness .db-label { margin-bottom: 8px }
+.db-bar-track {
+  height: 4px;
+  background: rgba(34,217,232,.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.db-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--current), var(--undertow));
+  border-radius: 2px;
+  transition: width .6s var(--ease-current);
+  box-shadow: 0 0 8px rgba(34,217,232,.4);
+}
+.db-pct {
+  font-family: 'Dash Horizon', var(--ff-mono);
+  font-size: .78rem;
+  color: var(--current);
+  margin-top: 5px;
+  display: block;
+}
+
+.db-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--ff-mono);
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+  padding: 4px 10px;
+  margin-top: 16px;
+}
+.db-status-chip::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STEP 1 — DATE CALENDAR (enlarged)
+   ══════════════════════════════════════════════════════════════ */
+
+/* Override old max-width, make calendar fill available space */
+.cal-wrap {
+  max-width: 100% !important;
+  margin-bottom: 28px !important;
+}
+
+.cal-grid { padding: 12px 14px 16px !important }
+
+/* Larger cells */
+.cal-days { gap: 4px !important }
+.cal-day {
+  aspect-ratio: 1 !important;
+  border-radius: 6px !important;
+  font-size: .88rem !important;
+  font-weight: 500 !important;
+  transition: background .2s, color .2s, transform .15s, box-shadow .3s !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Ripple on click */
+.cal-day .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(34,217,232,.35);
+  transform: scale(0);
+  animation: cal-ripple .5s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes cal-ripple {
+  to { transform: scale(4); opacity: 0 }
+}
+
+/* Available state — subtle cyan glow */
+.cal-day.available {
+  color: var(--text-soft) !important;
+}
+.cal-day.available:hover {
+  background: rgba(34,217,232,.1) !important;
+  color: var(--current-soft) !important;
+  box-shadow: 0 0 0 1px rgba(34,217,232,.25), 0 0 12px rgba(34,217,232,.12) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* First available — bioluminescent pulse */
+.cal-day.first-available {
+  background: rgba(34,217,232,.08) !important;
+  color: var(--current) !important;
+  border: 1px solid rgba(34,217,232,.25) !important;
+  font-weight: 700 !important;
+  animation: bio-pulse 3s ease-in-out infinite !important;
+}
+@keyframes bio-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(34,217,232,0) }
+  50%      { box-shadow: 0 0 12px 3px rgba(34,217,232,.15) }
+}
+.cal-day.first-available:hover {
+  animation: none !important;
+  background: rgba(34,217,232,.18) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Selected state — GOLD accent */
+.cal-day.selected {
+  background: linear-gradient(135deg, var(--cta-from), var(--cta-to)) !important;
+  color: var(--abyss) !important;
+  box-shadow: 0 0 20px rgba(245,158,11,.45), 0 2px 8px rgba(0,0,0,.3) !important;
+  font-weight: 700 !important;
+  transform: scale(1.08) !important;
+}
+
+/* Blocked / past — muted */
+.cal-day.blocked, .cal-day.past {
+  opacity: .3 !important;
+  text-decoration: none !important;
+  cursor: not-allowed !important;
+}
+
+/* Booked-from-sheet — red-tinted muted */
+.cal-day.booked-external {
+  opacity: .2 !important;
+  cursor: not-allowed !important;
+  color: var(--text-muted) !important;
+}
+.cal-day.booked-external::after {
+  content: '•';
+  position: absolute;
+  bottom: 2px; left: 50%;
+  transform: translateX(-50%);
+  font-size: .4rem;
+  color: #FF6B6B;
+}
+
+/* Legend dots */
+.leg-dot--sel { background: linear-gradient(135deg, var(--cta-from), var(--cta-to)) !important }
+.leg-dot--avail { background: var(--current) !important }
+
+/* ══════════════════════════════════════════════════════════════
+   STEP 2 — TIME SLOT SELECTION
+   ══════════════════════════════════════════════════════════════ */
+.times-grid-v2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.t-btn-v2 {
+  background: rgba(10,21,29,.6);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 14px 12px;
+  font-family: var(--ff-mono);
+  font-size: .78rem;
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: border-color .2s, background .2s, box-shadow .25s, transform .15s;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+.t-btn-v2:hover:not(.t-disabled) {
+  border-color: rgba(34,217,232,.4);
+  background: rgba(34,217,232,.06);
+  color: var(--current-soft);
+  box-shadow: 0 0 12px rgba(34,217,232,.1);
+  transform: translateY(-1px);
+}
+.t-btn-v2:active:not(.t-disabled) { transform: scale(.95) }
+
+/* Selected — gold highlight + checkmark */
+.t-btn-v2.t-sel {
+  background: rgba(245,158,11,.1) !important;
+  border-color: var(--gold) !important;
+  color: var(--gold) !important;
+  box-shadow: 0 0 16px rgba(245,158,11,.2) !important;
+  font-weight: 700 !important;
+}
+.t-btn-v2.t-sel::after {
+  content: '✓';
+  position: absolute;
+  top: 5px; right: 8px;
+  font-size: .62rem;
+  color: var(--gold);
+}
+
+/* Unavailable slot */
+.t-btn-v2.t-disabled {
+  opacity: .25;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  text-decoration-color: rgba(255,255,255,.2);
+}
+
+/* Suggest time toggle */
+.t-btn-v2.t-suggest {
+  border-style: dashed;
+  color: var(--text-muted);
+  grid-column: span 1;
+}
+.t-btn-v2.t-suggest:hover {
+  border-color: var(--undertow) !important;
+  color: var(--undertow-soft) !important;
+  background: rgba(110,120,255,.06) !important;
+  box-shadow: none !important;
+}
+.t-btn-v2.t-suggest.t-sel {
+  background: rgba(110,120,255,.08) !important;
+  border-color: var(--undertow) !important;
+  color: var(--undertow-soft) !important;
+  box-shadow: none !important;
+}
+.t-btn-v2.t-suggest.t-sel::after { display: none }
+
+.custom-time-reveal {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: rgba(110,120,255,.05);
+  border: 1px solid rgba(110,120,255,.2);
+  border-radius: 6px;
+}
+.custom-time-reveal.show { display: flex }
+.custom-time-reveal input[type="time"] {
+  background: var(--depth-1) !important;
+  border: 1px solid var(--edge-strong) !important;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: var(--text-bright);
+  font-family: var(--ff-mono);
+  font-size: .88rem;
+  width: 160px;
+}
+.custom-time-reveal input:focus {
+  outline: none;
+  border-color: var(--undertow) !important;
+  box-shadow: 0 0 0 3px rgba(110,120,255,.12) !important;
+}
+.custom-time-reveal span {
+  font-family: var(--ff-mono);
+  font-size: .68rem;
+  color: var(--text-muted);
+  letter-spacing: .06em;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STEP 3 — DETAILS FORM
+   ══════════════════════════════════════════════════════════════ */
+
+/* Radio group — primary goal / budget etc */
+.radio-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+@media (max-width: 480px) {
+  .radio-group { grid-template-columns: 1fr }
+}
+
+.radio-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10,21,29,.5);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+  font-family: var(--ff-b);
+  font-size: .84rem;
+  color: var(--text-soft);
+  -webkit-tap-highlight-color: transparent;
+}
+.radio-opt:hover {
+  border-color: rgba(34,217,232,.3);
+  background: rgba(34,217,232,.04);
+  color: var(--text-bright);
+}
+.radio-opt input[type="radio"] {
+  width: 14px; height: 14px;
+  accent-color: var(--current);
+  flex-shrink: 0;
+}
+.radio-opt.ro-selected {
+  border-color: var(--current) !important;
+  background: rgba(34,217,232,.06) !important;
+  color: var(--current-soft) !important;
+}
+
+/* Outcome-framed service checkboxes */
+.outcome-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+@media (max-width: 480px) {
+  .outcome-grid { grid-template-columns: 1fr }
+}
+
+.outcome-chk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10,21,29,.5);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  font-family: var(--ff-b);
+  font-size: .84rem;
+  color: var(--text-soft);
+  -webkit-tap-highlight-color: transparent;
+}
+.outcome-chk:hover {
+  border-color: rgba(34,217,232,.3);
+  background: rgba(34,217,232,.04);
+  color: var(--text-bright);
+}
+.outcome-chk input[type="checkbox"] {
+  accent-color: var(--current);
+  width: 14px; height: 14px;
+  flex-shrink: 0;
+}
+.outcome-chk.oc-checked {
+  border-color: rgba(34,217,232,.4) !important;
+  background: rgba(34,217,232,.07) !important;
+  color: var(--current-soft) !important;
+}
+
+/* Optional section reveal */
+.opt-section {
+  border-top: 1px solid var(--edge);
+  margin-top: 28px;
+  padding-top: 24px;
+}
+.opt-section-toggle {
+  background: none;
+  border: none;
+  font-family: var(--ff-mono);
+  font-size: .65rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  margin-bottom: 20px;
+  transition: color .2s;
+}
+.opt-section-toggle:hover { color: var(--current) }
+.opt-section-toggle .toggle-icon {
+  font-size: .8rem;
+  transition: transform .25s var(--ease-current);
+}
+.opt-section-toggle.open .toggle-icon { transform: rotate(90deg) }
+.opt-section-body { display: none }
+.opt-section-body.open { display: block }
+
+/* ══════════════════════════════════════════════════════════════
+   STEP 4 — REVIEW & WHAT TO EXPECT
+   ══════════════════════════════════════════════════════════════ */
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+@media (max-width: 600px) {
+  .review-grid { grid-template-columns: 1fr }
+}
+
+.review-card {
+  background: rgba(10,21,29,.5);
+  border: 1px solid var(--edge);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+.review-card .rc-label {
+  font-family: var(--ff-mono);
+  font-size: .55rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.review-card .rc-value {
+  font-family: var(--ff-h);
+  font-size: .88rem;
+  color: var(--text-bright);
+  font-weight: 600;
+}
+.review-card .rc-value.rvc-gold { color: var(--gold) }
+.review-card .rc-edit {
+  position: absolute;
+  top: 10px; right: 12px;
+  font-family: var(--ff-mono);
+  font-size: .55rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--current);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: color .2s, background .2s;
+}
+.review-card .rc-edit:hover {
+  color: var(--text-bright);
+  background: rgba(34,217,232,.08);
+}
+
+/* What to expect panel */
+.expect-panel {
+  background: rgba(34,217,232,.03);
+  border: 1px solid var(--edge);
+  border-left: 3px solid var(--current);
+  border-radius: 6px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+}
+.expect-panel .ep-heading {
+  font-family: var(--ff-mono);
+  font-size: .6rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--current);
+  margin-bottom: 16px;
+}
+.expect-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.expect-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--ff-b);
+  font-size: .88rem;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+.expect-item::before {
+  content: '✓';
+  color: var(--current);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SHARED — picked date banner (step 2 & 3)
+   ══════════════════════════════════════════════════════════════ */
+.session-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  background: rgba(245,158,11,.06);
+  border: 1px solid rgba(245,158,11,.2);
+  border-radius: 6px;
+  padding: 12px 18px;
+  margin-bottom: 24px;
+}
+.sb-icon { font-size: 1.1rem; flex-shrink: 0 }
+.sb-text {
+  font-family: var(--ff-h);
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--gold);
+  flex: 1;
+}
+.sb-chip {
+  font-family: var(--ff-mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
+  padding: 3px 10px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   AVAILABILITY LOADING STATE
+   ══════════════════════════════════════════════════════════════ */
+.cal-loading-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(5,11,16,.7);
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  backdrop-filter: blur(2px);
+}
+.cal-loading-overlay.show { display: flex }
+.cal-spinner {
+  width: 28px; height: 28px;
+  border: 2px solid rgba(34,217,232,.2);
+  border-top-color: var(--current);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg) } }
+
+/* Race-condition banner */
+.date-conflict-msg {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,107,107,.08);
+  border: 1px solid rgba(255,107,107,.3);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-family: var(--ff-b);
+  font-size: .84rem;
+  color: #FF9090;
+  line-height: 1.4;
+}
+.date-conflict-msg.show { display: flex }
+.date-conflict-msg::before { content: '⚠'; flex-shrink: 0 }
+
+/* ══════════════════════════════════════════════════════════════
+   PANEL NAVIGATION
+   ══════════════════════════════════════════════════════════════ */
+.panel-footer {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--edge) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+.panel-footer-note {
+  font-family: var(--ff-mono);
+  font-size: .62rem;
+  color: var(--text-muted);
+  letter-spacing: .06em;
+  flex: 1;
+}
+.btn-back {
+  background: none;
+  border: 1px solid var(--edge);
+  border-radius: 4px;
+  padding: 11px 20px;
+  font-family: var(--ff-mono);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+.btn-back:hover {
+  border-color: var(--edge-strong);
+  color: var(--text-soft);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SUCCESS STATE — REQUEST RECEIVED
+   ══════════════════════════════════════════════════════════════ */
+#bookingSuccess h3 {
+  font-family: var(--ff-h) !important;
+  color: var(--text-bright) !important;
+  font-size: 1.6rem !important;
+  letter-spacing: .02em !important;
+}
+#bookingSuccess p {
+  color: var(--text-soft) !important;
+}
+.success-ring {
+  background: linear-gradient(135deg, rgba(34,217,232,.3), rgba(34,217,232,.1)) !important;
+  border: 2px solid var(--current) !important;
+  box-shadow: 0 0 32px rgba(34,217,232,.25) !important;
+}
+.success-id {
+  font-family: var(--ff-mono);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.success-id span {
+  color: var(--current);
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   OCEAN-CURRENT.CSS OVERRIDES specific to v2
+   ══════════════════════════════════════════════════════════════ */
+.fg input, .fg select, .fg textarea {
+  background: rgba(10,21,29,.6) !important;
+  border-color: var(--edge) !important;
+  color: var(--text-bright) !important;
+  border-radius: 6px !important;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus {
+  background: rgba(10,21,29,.8) !important;
+  border-color: var(--current) !important;
+  box-shadow: 0 0 0 3px rgba(34,217,232,.1) !important;
+}
+.fg input::placeholder, .fg textarea::placeholder {
+  color: var(--text-muted) !important;
+  font-size: .84rem !important;
+}
+.fg label {
+  color: var(--text-muted) !important;
+  font-family: var(--ff-mono) !important;
+  font-size: .6rem !important;
+  letter-spacing: .14em !important;
+}
+
+/* tz pill */
+.tz-pill {
+  background: rgba(34,217,232,.05) !important;
+  border-color: var(--edge) !important;
+  color: var(--current-soft) !important;
+  font-family: var(--ff-mono) !important;
+  letter-spacing: .08em !important;
+}
+
+/* cal header title */
+.cal-title {
+  color: var(--text-bright) !important;
+  font-family: var(--ff-h) !important;
+  font-size: 1rem !important;
+}
+
+/* cal dow labels */
+.cal-dow span {
+  color: var(--text-muted) !important;
+  font-family: var(--ff-mono) !important;
+}
+
+/* legend */
+.leg-item { color: var(--text-muted) !important }
+
+/* panel label */
+.panel-lbl {
+  color: var(--text-muted) !important;
+  font-family: var(--ff-mono) !important;
+  font-size: .6rem !important;
+  letter-spacing: .16em !important;
+}
