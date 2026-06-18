@@ -106,8 +106,8 @@
 .bp-inline-cta-eyebrow { color: var(--current) !important; font-family: var(--ff-mono) !important }
 .bp-inline-cta-title { color: var(--text-bright) !important; font-family: var(--ff-h) !important }
 .bp-inline-cta-desc { color: var(--text-soft) !important }
-.bp-inline-cta-btn { background: linear-gradient(120deg, var(--current), var(--undertow)) !important; color: var(--abyss) !important; box-shadow: 0 4px 20px rgba(34,217,232,.25) !important; font-family: var(--ff-mono) !important; letter-spacing: .04em !important }
-.bp-inline-cta-btn:hover { box-shadow: 0 8px 32px rgba(110,120,255,.35) !important; color: var(--abyss) !important }
+.bp-inline-cta-btn { background: linear-gradient(135deg, var(--cta-from), var(--cta-to)) !important; color: var(--abyss) !important; box-shadow: 0 4px 20px rgba(245,158,11,.25) !important; font-family: var(--ff-mono) !important; letter-spacing: .04em !important }
+.bp-inline-cta-btn:hover { box-shadow: var(--shadow-cta) !important; color: var(--abyss) !important }
 
 /* Tags */
 .bp-tags { border-top: 1px solid var(--edge) !important }
@@ -182,3 +182,107 @@
 @keyframes cc-pulse { 0%,100% { opacity: .6; transform: translate(-50%,-50%) scale(1) } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.35) } }
 @media (min-width: 1300px) { .current-channel { display: block } }
 @media (prefers-reduced-motion: reduce) { .cc-node { animation: none !important } }
+
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVENESS — Blog listing + Article pages
+   Targets real-world viewport widths: 768 → 480 → 375 → 320px
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Tablet / large mobile (≤ 768px) ──────────────────────── */
+@media (max-width: 768px) {
+  /* Hero */
+  .bp-hero { padding: 44px 0 0 !important }
+  .bp-title { font-size: clamp(1.7rem, 6.5vw, 2.4rem) !important; letter-spacing: -.025em !important }
+  .bp-subtitle { font-size: .98rem !important; margin-bottom: 24px !important }
+
+  /* Author bar — no social links pushing off screen */
+  .bp-author-bar { gap: 10px !important; padding: 16px 0 !important }
+  .bp-author-bar-socials { display: none !important }
+
+  /* Cover image — tighter max-height on small screens */
+  .bp-cover-wrap { max-height: 320px !important }
+  .bp-cover { max-height: 320px !important }
+
+  /* Body / layout — single column already handled at 960px but needs tighter padding */
+  .bp-body { padding: 40px 0 80px !important }
+  .bp-layout { gap: 40px !important; padding: 0 4px !important }
+  .bp-article { max-width: 100% !important }
+
+  /* Article typography — readable measure */
+  .bp-article p { font-size: 1rem !important; line-height: 1.88 !important; margin-bottom: 26px !important }
+  .bp-article > p:first-of-type { font-size: 1.06rem !important }
+  .bp-article h1 { font-size: 1.7rem !important; margin: 48px 0 16px !important }
+  .bp-article h2 { font-size: 1.3rem !important; margin: 48px 0 14px !important }
+  .bp-article h3 { font-size: 1.1rem !important; margin: 36px 0 12px !important }
+
+  /* Figures — full bleed feels too aggressive on narrow screens */
+  .bp-article .blog-figure { margin: 36px 0 !important }
+  .bp-article .blog-figure img { border-radius: 12px !important }
+
+  /* Blockquote — reduce horizontal padding */
+  .bp-article blockquote { padding: 20px 20px 20px 32px !important; margin: 36px 0 !important }
+
+  /* Code blocks — horizontal scroll without clipping */
+  .bp-article .blog-code { padding: 20px 18px !important; border-radius: 10px !important }
+  .bp-article .blog-code code { font-size: .82rem !important }
+
+  /* Inline CTA — stack on narrow viewports */
+  .bp-inline-cta { padding: 28px 22px !important }
+  .bp-inline-cta-inner { flex-direction: column !important; gap: 20px !important }
+  .bp-inline-cta-title { font-size: 1.2rem !important }
+  .bp-inline-cta-btn { width: 100% !important; justify-content: center !important; padding: 14px 24px !important }
+
+  /* Share bar */
+  .bp-share-bar { flex-wrap: wrap !important; gap: 8px !important }
+
+  /* Related posts */
+  .bp-related-grid { grid-template-columns: 1fr !important; gap: 16px !important }
+
+  /* Author card */
+  .bp-author-card { padding: 24px !important; gap: 16px !important }
+
+  /* Mobile TOC */
+  .bp-toc-mobile { margin: 0 0 28px !important }
+  .bp-toc-mobile-body ul li a { font-size: .76rem !important; padding: 10px 14px !important }
+}
+
+/* ── Small mobile (≤ 480px) ────────────────────────────────── */
+@media (max-width: 480px) {
+  .bp-hero { padding: 36px 0 0 !important }
+  .bp-title { font-size: clamp(1.5rem, 7.5vw, 1.9rem) !important }
+  .bp-subtitle { font-size: .93rem !important; line-height: 1.72 !important }
+  .bp-meta-top { gap: 7px !important }
+
+  .bp-body { padding: 32px 0 72px !important }
+  .bp-article p { font-size: .97rem !important; margin-bottom: 22px !important }
+  .bp-article h1 { font-size: 1.48rem !important; margin: 36px 0 14px !important }
+  .bp-article h2 { font-size: 1.2rem !important; margin: 36px 0 12px !important }
+  .bp-article h3 { font-size: 1.06rem !important; margin: 28px 0 10px !important }
+
+  .bp-article blockquote { padding: 16px 16px 16px 26px !important; font-size: .97rem !important }
+  .bp-article .blog-callout { padding: 18px 18px !important; flex-direction: column !important; gap: 10px !important }
+  .bp-article .blog-code { padding: 16px 14px !important; border-radius: 8px !important }
+
+  .bp-inline-cta { padding: 22px 18px !important }
+  .bp-inline-cta-title { font-size: 1.1rem !important }
+  .bp-inline-cta-desc { font-size: .92rem !important }
+  .bp-inline-cta-btn { font-size: .74rem !important; padding: 13px 20px !important }
+
+  .bp-author-card { flex-direction: column !important; align-items: flex-start !important }
+  .bp-tags { flex-wrap: wrap !important; gap: 8px !important; padding-top: 20px !important }
+}
+
+/* ── Tiny mobile (≤ 360px) ─────────────────────────────────── */
+@media (max-width: 360px) {
+  .bp-title { font-size: 1.38rem !important }
+  .bp-article p { font-size: .94rem !important }
+  .bp-article h2 { font-size: 1.12rem !important }
+  .bp-article h3 { font-size: 1rem !important }
+  .bp-inline-cta { padding: 18px 14px !important }
+  .bp-inline-cta-btn { font-size: .7rem !important; padding: 12px 16px !important }
+
+  /* Prevent code from causing horizontal scroll at 320px */
+  .bp-article .blog-code { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important }
+  .bp-article .blog-table { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; display: block !important }
+}
