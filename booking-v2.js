@@ -842,9 +842,28 @@
     initRadioGroups();
     setupEmailValidation();
     renderCalendar();
-    fetchAvailability();
     goToStep(1, false);
     updateDiveBrief();
+
+    /* Defer the GAS availability fetch until the booking section is near
+       the viewport. Previously this fired on DOMContentLoaded — a network
+       round-trip to GAS on every page load even if the user never scrolls
+       to the booking section. IntersectionObserver fires once when the
+       section is within 400px of the viewport, then disconnects. */
+    var bookingTarget = document.getElementById('bookingShell')
+                     || document.getElementById('booking');
+    if (bookingTarget && 'IntersectionObserver' in window) {
+      var availObserver = new IntersectionObserver(function(entries, obs) {
+        if (entries[0].isIntersecting) {
+          fetchAvailability();
+          obs.disconnect();
+        }
+      }, { rootMargin: '400px' });
+      availObserver.observe(bookingTarget);
+    } else {
+      /* Fallback for old browsers or if target not found */
+      fetchAvailability();
+    }
   });
 
 })();

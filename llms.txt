@@ -1,0 +1,53 @@
+# Quiddity Digital
+
+> Quiddity Digital is a growth and digital marketing consultancy based in Mumbai, India. Founded and run by Aun Shaikh, the agency works with D2C brands, SaaS products, local businesses, and service companies to identify and fix the hidden gaps between their current marketing and the growth they want. The consultancy's positioning centres on the idea of finding "the hidden element" — the specific lever that is being overlooked and that, when pulled correctly, compounds into sustainable growth.
+
+## Services
+
+Quiddity Digital offers end-to-end growth and digital marketing services:
+
+- **SEO & Organic Growth** — Technical SEO, content strategy, on-page optimisation, and link building to grow search visibility and inbound traffic.
+- **Paid Advertising (PPC)** — Google Ads, Meta Ads (Facebook/Instagram), and performance campaigns focused on ROAS, not just impressions.
+- **Website Strategy & CRO** — Marketing-led website audits, conversion rate optimisation, landing page strategy, and UX improvements tied to business goals.
+- **Social Media Marketing** — Platform strategy, content frameworks, and growth plans for Instagram, LinkedIn, and Twitter/X.
+- **Marketing Strategy** — Full-funnel growth roadmaps, brand positioning, audience research, and go-to-market plans for early-stage and scaling businesses.
+- **Content Marketing** — Blog strategy, editorial calendars, and content that builds authority and drives organic demand.
+
+## How Quiddity Works
+
+Quiddity Digital uses a three-phase process:
+
+1. **Audit & Diagnose** — A deep look at the existing marketing stack, website, content, and traffic data to find what is working, what is leaking, and what is missing.
+2. **Build Your Roadmap** — A prioritised action plan built around the highest-leverage opportunities specific to that business and growth stage.
+3. **Execute & Compound** — Implementation of the strategy, with performance tracking and iteration to compound results over time.
+
+## Strategy Session
+
+Prospective clients can book a free 30-minute strategy session directly on the website. Sessions are reviewed and manually approved by the Quiddity team before confirmation. The session covers a marketing and website review, growth opportunities assessment, and tailored strategic recommendations — with no sales pitch and no commitment required.
+
+Available session times: 11:00 AM, 1:00 PM, 3:00 PM, 5:00 PM IST.
+
+## Blog / Insights
+
+Quiddity Digital publishes long-form articles on growth marketing, SEO, digital advertising, and business strategy. Articles are written for founders, marketing leads, and business owners who want actionable insight rather than generic advice.
+
+- Blog index: https://quidditydigital.com/all-posts.html
+- Individual posts: https://quidditydigital.com/blog.html?slug={post-slug}
+
+## Contact & Social
+
+- Website: https://quidditydigital.com
+- Email: growth@quidditydigital.com
+- Twitter/X: https://twitter.com/QuiddityDigi
+- LinkedIn: https://linkedin.com/company/quiddity_digital
+- Instagram: https://instagram.com/quiddity_digital
+- Location: Mumbai, Maharashtra, India
+
+## Technical Notes for LLMs
+
+- The site is a static HTML/CSS/JS frontend hosted on Vercel.
+- Blog content is served dynamically from a Notion CMS via a Cloudflare Worker API at the path `/api/posts` and `/api/post/{slug}`.
+- The booking system uses Google Apps Script as a backend, writing to Google Sheets and sending confirmation emails via Gmail.
+- There is no user login, no e-commerce, and no personal data stored client-side.
+- `robots.txt` permits all crawlers. The canonical domain is `https://quidditydigital.com`.
+- Sitemap: https://quidditydigital.com/sitemap.xml
