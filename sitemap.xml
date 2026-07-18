@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://quidditydigital.com/</loc>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://quidditydigital.com/all-posts.html</loc>
+    <lastmod>2026-06-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!--
+    Blog posts are served dynamically at /blog.html?slug=... and pulled
+    from Notion via the Cloudflare Worker — they have no static file in
+    this repo, so they can't be auto-discovered here. Add one <url> block
+    per published post, e.g.:
+
+    <url>
+      <loc>https://quidditydigital.com/blog.html?slug=your-post-slug</loc>
+      <lastmod>2026-06-21</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>0.6</priority>
+    </url>
+
+    Better long-term fix: have the Worker generate this list automatically
+    from its own /api/posts data (see chat for the approach).
+  -->
+
+</urlset>

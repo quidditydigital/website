@@ -4,10 +4,10 @@
    Primary: #0BC4DC (brand blue)
    Accent : #E1AD01 → CTA gradient → #F59E0B
    BG     : #FFFFFF / #F8F9FA / #F0FAFB
-   Fonts  : Josefin Sans (headings) · Inter (body)
+   Fonts  : Archive (headings) · Inter (body)
    ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
 /* ── TOKENS ─────────────────────────────────────────────────────── */
 :root {
@@ -41,7 +41,7 @@
   --green:   #10B981;
 
   /* Typography */
-  --ff-h: 'Josefin Sans', sans-serif;
+  --ff-h: 'Archive', sans-serif;
   --ff-b: 'Inter', sans-serif;
 
   /* Spacing */

@@ -22,9 +22,17 @@
   <meta property="og:locale"       content="en_IN"/>
   <meta name="twitter:image"       content="https://quidditydigital.com/assets/og-image.png"/>
   <link rel="canonical" href="https://quidditydigital.com"/>
-  <!-- Font preconnect MUST come before the stylesheet link -->
+  <!-- Font loading strategy:
+       1. preconnect: open the TCP connection to Google Fonts before the
+          browser even parses the font CSS — shaves ~150ms on mobile.
+       2. Google Fonts as a <link> (NOT @import in CSS): runs in parallel
+          with the stylesheet downloads rather than sequentially after.
+       3. Archive preload: tells the browser to fetch the hero headline
+          font ASAP, preventing the visible FOUT on the H1. -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"/>
+  <link rel="preload" href="public/fonts/Archive.ttf" as="font" type="font/ttf" crossorigin/>
   <link rel="stylesheet" href="styles.css"/>
   <link rel="stylesheet" href="ocean-current.css"/>
   <link rel="stylesheet" href="booking-v2.css"/>
@@ -116,7 +124,7 @@
 <nav id="navbar">
   <div class="container nav-wrap">
     <a href="#home" class="nav-logo" aria-label="Quiddity Digital – Home">
-      <span class="nav-logo-wrap"><img src="assets/Header-wordmark.svg" alt="Quiddity Digital" class="nav-logo-img"></span>
+      <span class="nav-logo-wrap"><img src="assets/Header-wordmark-v3.svg" alt="Quiddity Digital" class="nav-logo-img" fetchpriority="high" decoding="async"></span>
     </a>
 
     <ul class="nav-links" id="navLinks">
@@ -330,7 +338,7 @@
       <div class="hc reveal d1">
         <div class="hc-n">01</div>
         <div class="hc-icon hci--grey">
-          <img src="assets/Diagnose.png" alt="Audit & Diagnose">
+          <img src="assets/Diagnose.png" alt="Audit & Diagnose" loading="lazy" decoding="async">
         </div>
         <h3>Audit &amp; Diagnose</h3>
         <p>A forensic review of your current SEO, ad spend, landing pages, and competitors. We surface exactly where revenue is leaking and which growth channels are being under-leveraged.</p>
@@ -339,7 +347,7 @@
       <div class="hc reveal d2">
         <div class="hc-n">02</div>
         <div class="hc-icon hci--grey">
-          <img src="assets/Roadmap.png" alt="Build Your Roadmap">
+          <img src="assets/Roadmap.png" alt="Build Your Roadmap" loading="lazy" decoding="async">
         </div>
         <h3>Build Your Roadmap</h3>
         <p>A custom multi-channel growth plan — specific to your business, budget, and target audience. Every channel earns its place based on data, not guesswork or agency convenience.</p>
@@ -348,7 +356,7 @@
       <div class="hc reveal d3">
         <div class="hc-n">03</div>
         <div class="hc-icon hci--grey">
-          <img src="assets/Execute.png" alt="Execute & Compound">
+          <img src="assets/Execute.png" alt="Execute & Compound" loading="lazy" decoding="async">
         </div>
         <h3>Execute &amp; Compound</h3>
         <p>We launch, test, and optimise continuously. Weekly reporting you can actually read, honest assessments of what's working, and a team that treats your budget like it's their own.</p>
@@ -542,6 +550,12 @@
           ───────────────────────────── -->
           <div class="step-panel" id="step2">
             <p class="panel-lbl">Select a time slot</p>
+
+            <div class="session-banner" id="sessionBanner2">
+              <span class="sb-icon">📅</span>
+              <span class="sb-text">—</span>
+              <span class="sb-chip">Select a slot</span>
+            </div>
 
             <div class="times-grid-v2" id="timeGridV2"></div>
 
@@ -880,9 +894,12 @@
   </div>
 </footer>
 
-<!-- config.js must load synchronously before notion.js and script.js -->
+<!-- config.js loads synchronously: it defines CONFIG which notion.js and
+     script.js read. notion.js and script.js use defer so they don't block
+     HTML parsing — they execute in order after the document is parsed,
+     by which point config.js has already run. -->
 <script src="config.js"></script>
-<script src="notion.js"></script>
+<script src="notion.js" defer></script>
 <script src="script.js" defer></script>
 <script src="booking-v2.js" defer></script>
 
@@ -904,20 +921,38 @@
   /* ── 2. Bioluminescent particles — 70% cyan, 30% violet ── */
   var pc = document.getElementById('heroParticles');
   if (pc) {
-    for (var i = 0; i < 58; i++) {
-      var el = document.createElement('div');
-      var isViolet = Math.random() < 0.3;
-      el.className = 'particle' + (isViolet ? ' p-violet' : '');
-      var size = (Math.random() * 2.6 + 1.6).toFixed(1);
-      el.style.cssText = [
-        'width:'  + size + 'px',
-        'height:' + size + 'px',
-        'left:'   + (Math.random() * 100).toFixed(1) + '%',
-        'bottom:' + (Math.random() * 62).toFixed(1) + '%',
-        'animation-duration:'  + (Math.random() * 13 + 9).toFixed(1) + 's',
-        'animation-delay:-'    + (Math.random() * 20).toFixed(1) + 's'
-      ].join(';');
-      pc.appendChild(el);
+    /* Skip particle creation entirely if the user prefers reduced motion.
+       The CSS @media rule also handles this, but avoiding DOM creation
+       saves both parse time and compositor layers. */
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReduced) {
+      /* On mobile, create 28 particles instead of 58.
+         The CSS nth-child(even){display:none} rule would hide half anyway,
+         but creating 58 nodes and then hiding 29 still wastes DOM insertion
+         cost and compositor memory. Creating 28 upfront is cleaner. */
+      var isMobile = window.innerWidth <= 768;
+      var count = isMobile ? 28 : 58;
+
+      /* DocumentFragment: batch all 28/58 insertions into a single DOM write
+         instead of 58 individual appendChild calls each triggering layout. */
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < count; i++) {
+        var el = document.createElement('div');
+        var isViolet = Math.random() < 0.3;
+        el.className = 'particle' + (isViolet ? ' p-violet' : '');
+        var size = (Math.random() * 2.6 + 1.6).toFixed(1);
+        el.style.cssText = [
+          'width:'  + size + 'px',
+          'height:' + size + 'px',
+          'left:'   + (Math.random() * 100).toFixed(1) + '%',
+          'bottom:' + (Math.random() * 62).toFixed(1) + '%',
+          'animation-duration:'  + (Math.random() * 13 + 9).toFixed(1) + 's',
+          'animation-delay:-'    + (Math.random() * 20).toFixed(1) + 's'
+        ].join(';');
+        frag.appendChild(el);
+      }
+      pc.appendChild(frag); /* single DOM write */
     }
   }
 

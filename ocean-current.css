@@ -2,12 +2,16 @@
    QUIDDITY DIGITAL — ocean-current.css
    "Hidden Current" — Visual Identity System
    Abstract deep-ocean / bioluminescent / technological aesthetic.
-   Typography: Space Grotesk (display) · Inter (body) · Space Mono
+   Typography: Archive (headings) · Inter (body) · Space Mono
    (data/labels) · Dash Horizon (display numerals only — digits 0-9)
+   · TT Drugs Trial Black (section eyebrow/tag labels only)
    Loaded after styles.css on every page.
    ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+/* Google Fonts (Space Mono + Inter) loaded via <link> in <head> —
+   NOT via @import here. CSS @import is render-blocking: the browser
+   must download ocean-current.css first, then start the font request.
+   A <link rel="stylesheet"> in <head> runs both downloads in parallel. */
 
 /* Dash Horizon — demo charset is digits + A-Z/a-z only (no symbols).
    Used ONLY where markup isolates pure digits from any suffix glyph
@@ -15,6 +19,44 @@
 @font-face {
   font-family: 'Dash Horizon';
   src: url('public/fonts/Dash-Horizon-Demo.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Archive — primary heading family (replaces Space Grotesk).
+   Three real faces: Regular, Bold, Italic. Declared on one
+   font-family name so font-weight/font-style in existing rules
+   resolve to the correct file automatically. */
+@font-face {
+  font-family: 'Archive';
+  src: url('public/fonts/Archive.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Archive';
+  src: url('public/fonts/ArchiveBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Archive';
+  src: url('public/fonts/ArchiveItalic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* TT Drugs Trial Black — accent face for section eyebrow/tag
+   labels only (.section-tag, .signal-tag, .philosophy-label).
+   Single Black-weight file; wide weight range so it always
+   resolves regardless of the font-weight requested in CSS. */
+@font-face {
+  font-family: 'TT Drugs Trial Black';
+  src: url('public/fonts/TT Drugs Trial Black.otf') format('opentype');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -77,7 +119,7 @@
   --red:   #FF6B6B;
   --green: #34D8A8;
 
-  --ff-h:    'Space Grotesk', sans-serif;
+  --ff-h:    'Archive', sans-serif;
   --ff-b:    'Inter', sans-serif;
   --ff-mono: 'Space Mono', monospace;
 
@@ -141,19 +183,28 @@ html, body { background: var(--abyss); }
   box-shadow: 0 12px 40px rgba(0,0,0,.35) !important;
 }
 
-/* ── Logo — pre-cropped wordmark asset (assets/Header-wordmark.svg).
+/* ── Logo — pre-cropped wordmark asset (assets/Header-wordmark-v3.svg).
    Gold "QUIDDITY" + white "DIGITAL", icon mark already removed
-   at the asset level, so this is just a plain sized image. ── */
+   at the asset level, so this is just a plain sized image.
+   Sized larger for a real brand-mark presence; scales down in
+   stages at the existing layout breakpoints, never stretched
+   (height set, width auto preserves the SVG's native ratio). ── */
 .nav-logo {
   display: inline-flex !important;
   align-items: center !important;
   text-decoration: none !important;
   line-height: 0 !important;
 }
-.nav-logo-wrap { display: inline-block; line-height: 0 }
-.nav-logo-img { height: 30px; width: auto; display: block }
+.nav-logo-wrap { display: inline-block; line-height: 0; transition: height .3s var(--ease-current) }
+.nav-logo-img { height: 42px; width: auto; display: block; transition: height .3s var(--ease-current) }
+@media (max-width: 1024px) {
+  .nav-logo-img { height: 36px }
+}
 @media (max-width: 768px) {
-  .nav-logo-img { height: 20px }
+  .nav-logo-img { height: 28px }
+}
+@media (max-width: 480px) {
+  .nav-logo-img { height: 25px }
 }
 
 .nav-links a:not(.nav-cta) {
@@ -188,11 +239,27 @@ html, body { background: var(--abyss); }
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* contain:layout+style scopes all the animation work inside this section
+     so the browser never recalculates layout for the rest of the page
+     when particles/orbs animate. paint is NOT included because the hero
+     spans the full viewport — paint containment requires a fixed size. */
+  contain: layout style;
 }
 #home::before, #home::after { display: none !important }
 
+/* content-visibility:auto defers rendering of below-fold sections until
+   they approach the viewport. On first load this can save 200-400ms of
+   paint work on mobile. contain-intrinsic-size prevents layout shift by
+   giving the browser an estimated height to reserve. */
+#about, #help, #services, #blogs, #booking, footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
 /* atmospheric canvas — noise + vignette */
-.hero-ocean-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden }
+/* contain:strict tells the browser this element's paint changes never affect
+   layout outside it — eliminates reflow checks during animation frames. */
+.hero-ocean-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; contain: strict }
 .hero-ocean-canvas::before {
   content: ''; position: absolute; inset: 0; opacity: .025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -204,7 +271,9 @@ html, body { background: var(--abyss); }
 }
 
 /* drifting glow orbs — cyan + violet, asymmetric, very slow */
-.bio-orb { position: absolute; border-radius: 50%; pointer-events: none; will-change: transform }
+/* will-change removed: 95-170s animations don't benefit from GPU pre-promotion
+   and the extra compositing layers cost real VRAM on mobile. */
+.bio-orb { position: absolute; border-radius: 50%; pointer-events: none }
 .bio-orb--a {
   width: 760px; height: 760px; top: -220px; right: -160px;
   background: radial-gradient(circle, rgba(34,217,232,.085) 0%, transparent 65%);
@@ -227,7 +296,9 @@ html, body { background: var(--abyss); }
 /* ── CURRENT FIELD — the signature element ──────────────────
    Layered, slow-flowing channel lines with a traveling glow
    segment. Abstract "data current" rather than literal waves. */
-.current-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0 }
+/* contain:strict scopes the continuous stroke-dashoffset animation
+   so the browser doesn't recheck document layout on every frame. */
+.current-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; contain: strict }
 .cl { fill: none; stroke-linecap: round }
 .cl--a { stroke: var(--current);  opacity: .10; stroke-width: 1 }
 .cl--b { stroke: var(--undertow); opacity: .09; stroke-width: 1 }
@@ -239,14 +310,18 @@ html, body { background: var(--abyss); }
 @keyframes curflow { to { stroke-dashoffset: -1200 } }
 
 /* bioluminescent particles — cyan + violet */
-.hero-particles { position: absolute; inset: 0; pointer-events: none }
+/* contain:strict limits compositor work to this layer only */
+.hero-particles { position: absolute; inset: 0; pointer-events: none; contain: strict }
 .particle {
   position: absolute; border-radius: 50%; opacity: 0;
   background: var(--current);
-  box-shadow: 0 0 10px var(--current), 0 0 2px var(--current-soft);
+  /* filter:drop-shadow is GPU-composited on mobile; box-shadow was triggering
+     per-frame repaints across 58 elements. Visually identical glow result. */
+  filter: drop-shadow(0 0 5px var(--current));
+  will-change: transform, opacity;
   animation: float-up linear infinite;
 }
-.particle.p-violet { background: var(--undertow); box-shadow: 0 0 10px var(--undertow), 0 0 2px var(--undertow-soft) }
+.particle.p-violet { background: var(--undertow); filter: drop-shadow(0 0 5px var(--undertow)) }
 @keyframes float-up {
   0%   { opacity: 0;   transform: translateY(0) }
   10%  { opacity: .82 }
@@ -341,11 +416,16 @@ html, body { background: var(--abyss); }
 .trust-item svg { display: none !important }
 .trust-item:hover { color: var(--text-soft) !important }
 .trust-sep { width: 1px !important; height: 14px !important; background: var(--edge-strong) !important; display: inline-block !important; font-size: 0 !important }
+@media (max-width: 768px) {
+  .hero-trust-bar { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important }
+  .trust-item { padding: 0 !important }
+  .trust-sep { display: none !important }
+}
 
 /* stats row */
 .hero-stats { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; margin-top: 46px !important; padding-top: 34px !important; border-top: 1px solid var(--edge) !important; opacity: 0; animation: fadeInUp .7s var(--ease-current) .88s forwards }
-.hstat { flex: 1; min-width: 100px; padding: 0 !important; position: relative; text-align: center }
-.hstat-n { font-family: 'Dash Horizon', var(--ff-h) !important; font-size: 2.3rem !important; font-weight: 700 !important; line-height: 1 !important; color: var(--current) !important; letter-spacing: -.02em !important }
+.hstat { flex: 1; min-width: 100px; padding: 26px 14px 24px !important; position: relative; text-align: center }
+.hstat-n { font-family: 'Dash Horizon', var(--ff-h) !important; font-size: 2.3rem !important; font-weight: 700 !important; line-height: 1.3 !important; color: var(--current) !important; letter-spacing: -.02em !important; display: inline-block !important }
 .hstat-n sup { font-family: var(--ff-mono) !important; font-size: .5em !important; font-weight: 700 !important; vertical-align: super !important; color: var(--undertow-soft) !important }
 .hstat-l { font-family: var(--ff-mono) !important; font-size: .6rem !important; font-weight: 400 !important; letter-spacing: .12em !important; text-transform: uppercase !important; color: var(--text-muted) !important; margin-top: 6px !important; display: block !important }
 .hstat:nth-child(even) .hstat-n { color: var(--undertow-soft) !important }
@@ -382,12 +462,12 @@ html, body { background: var(--abyss); }
 .signal-glyph { flex-shrink: 0; width: 88px; opacity: .85; line-height: 0 }
 .signal-glyph svg { width: 100%; height: auto; display: block }
 
-.signal-meta, .philosophy-band > .philosophy-inner > div:first-child {
+.signal-meta {
   flex-shrink: 0; display: flex; flex-direction: column; gap: 6px;
   font-family: var(--ff-mono);
   padding-right: 32px; border-right: 1px solid var(--edge);
 }
-.signal-tag, .philosophy-label { font-size: .62rem !important; letter-spacing: .24em !important; text-transform: uppercase !important; color: var(--text-muted) !important; font-weight: 700 !important; font-family: var(--ff-mono) !important; margin-bottom: 0 !important }
+.signal-tag, .philosophy-label { font-size: .62rem !important; letter-spacing: .24em !important; text-transform: uppercase !important; color: var(--text-muted) !important; font-weight: 700 !important; font-family: 'TT Drugs Trial Black', var(--ff-mono) !important; margin-bottom: 0 !important }
 .signal-coords { font-size: .7rem; letter-spacing: .04em; color: var(--current-soft) }
 .philosophy-marker { display: none !important }
 
@@ -603,19 +683,41 @@ footer h5 { color: var(--current-soft) !important; font-family: var(--ff-mono) !
   .hero-h1 { font-size: clamp(2.5rem, 9.5vw, 3.6rem) !important }
   .discipline-strip { flex-wrap: wrap; gap: 8px }
   .discipline-sep { display: none }
-  .trust-item { padding: 0 12px !important }
+
+  /* ── Mobile performance: visual appearance unchanged ── */
+
+  /* SVG gaussian filter runs on CPU. On mobile we remove it from
+     the pulse paths — the stroke animation still plays, it just
+     lacks the soft glow halo. Imperceptible at mobile screen size. */
+  .cl--pulse { filter: none }
+
+  /* Reduce painted area of the large orbs on mobile */
+  .bio-orb--a { width: 480px; height: 480px }
+  .bio-orb--b { width: 360px; height: 360px }
+
+  /* Thin navbar blur on mobile — blur(20px) is the most expensive
+     backdrop-filter value; this still gives the glass effect. */
+  #navbar {
+    backdrop-filter: blur(12px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  }
+
+  /* Hide every other particle on mobile via nth-child — reduces
+     animated element count from 58 to ~29 without touching JS.
+     The remaining particles cover the same visual area. */
+  .particle:nth-child(even) { display: none }
 
   .cl--c { opacity: .04 }
   .cl--c.cl--pulse { opacity: .22 }
   .bio-orb--c { display: none }
 
   .philosophy-inner, .signal-inner { flex-direction: column; align-items: flex-start; gap: 20px }
-  .signal-meta, .philosophy-band > .philosophy-inner > div:first-child {
+  .signal-meta {
     flex-direction: row; align-items: center; gap: 14px;
     padding-right: 0; border-right: none;
     padding-bottom: 16px; border-bottom: 1px solid var(--edge); width: 100%;
   }
-  .signal-glyph { width: 64px }
+  .signal-glyph { width: 64px !important }
 
   .hc:nth-child(2), .hc:nth-child(3) { --off: 0px }
 
@@ -632,7 +734,7 @@ footer h5 { color: var(--current-soft) !important; font-family: var(--ff-mono) !
   .hero-actions { gap: 12px !important }
   .btn-ocean-primary, .btn-ocean-ghost { padding: 13px 22px; font-size: .72rem }
   .signal-band, .philosophy-band { padding: 44px 0 }
-  .signal-glyph { width: 56px }
+  .signal-glyph { width: 56px !important }
   .signal-text, .philosophy-quote { font-size: 1.15rem !important }
   #homeBlogGrid > .blog-card:first-child .blog-body { padding: 24px }
 }

@@ -321,6 +321,62 @@
 .leg-dot--sel { background: linear-gradient(135deg, var(--cta-from), var(--cta-to)) !important }
 .leg-dot--avail { background: var(--current) !important }
 
+
+/* ══════════════════════════════════════════════════════════════
+   CALENDAR TOOLTIP — blocked date reason on hover/tap
+   ══════════════════════════════════════════════════════════════ */
+.cal-day { position: relative !important }
+
+.cal-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(5,11,16,.96);
+  border: 1px solid var(--edge-strong);
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-family: var(--ff-mono);
+  font-size: .62rem;
+  letter-spacing: .06em;
+  color: var(--text-soft);
+  white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  animation: tip-in .12s ease;
+}
+@keyframes tip-in {
+  from { opacity:0; transform: translateX(-50%) translateY(4px) }
+  to   { opacity:1; transform: translateX(-50%) translateY(0) }
+}
+.cal-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--edge-strong);
+}
+
+/* Lead-time blocked (next 7 days) */
+.cal-day.lead-time {
+  opacity: .35 !important;
+  cursor: not-allowed !important;
+}
+
+/* Sunday / holiday / fully-booked */
+.cal-day.unavailable {
+  opacity: .25 !important;
+  cursor: not-allowed !important;
+  color: var(--text-muted) !important;
+}
+
+/* Step 2 session banner */
+#sessionBanner2 {
+  margin-bottom: 20px;
+}
+
 /* ══════════════════════════════════════════════════════════════
    STEP 2 — TIME SLOT SELECTION
    ══════════════════════════════════════════════════════════════ */

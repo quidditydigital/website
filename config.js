@@ -16,8 +16,8 @@ const CONFIG = Object.freeze({
   WORKER_URL: 'https://quiddity-blog-api.midnightytacc.workers.dev',
 
   /* Google Apps Script web app URL for bookings                  */
-  GAS_URL: 'https://script.google.com/macros/s/AKfycbyoBdF2gBH6VWGSNxNwb-gbe_xJZw4F9kqjgC-v7vtOPEPN5Qzw7Zsj9-mXYL0m-f7t/exec',
-
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbwf1WHPCIUz1CdDcpLI9b19tuCU1DARmEna7wr2XKPo_-zsYUUSM231T6h4N9prbn4Pgw/exec',
+   
   /* Production domain                                             */
   DOMAIN: 'https://quidditydigital.com',
 
